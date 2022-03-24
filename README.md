@@ -14,8 +14,8 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 
 It also adds some custom utilities and menus.
 
-Quick setup instructions
-------------------------
+Install
+-------
 
 ⚠️ **This is ALPHA software**
 
