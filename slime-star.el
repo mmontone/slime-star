@@ -21,6 +21,11 @@
 			["Quicksearch" quicksearch])
 		      "Documentation"))
 
+(defvar slime-star--load-path (file-name-directory load-file-name))
+
+(defun slime-star--add-swank-path ()
+  (slime-eval `(cl:progn (cl:push ,slime-star--load-path swank::*load-path*) nil)))
+
 (define-slime-contrib slime-star
   "SLIME with extra extensions preinstalled."
   (:authors "Mariano Montone")
@@ -31,7 +36,10 @@
    ;; setup key bindings
    (slime-star-setup-key-bindings)
    ;; add submenu to SLIME menu
-   ;;(slime-help--add-menu-to-slime)
-   (slime-star--setup-menus)))
+   (slime-star--setup-menus)
+
+   (advice-add 'slime-load-contribs :before #'slime-star--add-swank-path)
+	     
+   ))
 
 (provide 'slime-star)
