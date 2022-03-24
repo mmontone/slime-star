@@ -1,0 +1,15 @@
+[submodule "lisp-system-browser"]
+	path = lisp-system-browser
+	url = https://github.com/mmontone/lisp-system-browser.git
+[submodule "cl-def-properties"]
+	path = cl-def-properties
+	url = https://github.com/mmontone/cl-def-properties.git
+[submodule "slime-doc-contribs"]
+	path = slime-doc-contribs
+	url = https://github.com/mmontone/slime-doc-contribs.git
+[submodule "slime-breakpoints"]
+	path = slime-breakpoints
+	url = https://github.com/mmontone/slime-breakpoints.git
+[submodule "quicklisp-systems"]
+	path = quicklisp-systems
+	url = https://github.com/mmontone/quicklisp-systems.git
