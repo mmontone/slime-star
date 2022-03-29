@@ -39,8 +39,14 @@
       (lisp-mode)
       (switch-to-buffer buffer))))
 
+(defun sldb-kill-all-buffers ()
+  "Kill all SLDB buffers."
+  (interactive)
+  (dolist (buf (sldb-buffers))
+    (kill-buffer buf)))
+
 (defun slime-star-setup-key-bindings ()
-  )
+  (define-key sldb-mode-map "Q" 'sldb-kill-all-buffers))
 
 (defun slime-star--setup-menus ()
   (easy-menu-add-item 'menubar-slime nil
