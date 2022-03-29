@@ -45,7 +45,7 @@
   (dolist (buf (sldb-buffers))
     (kill-buffer buf)))
 
-(defun slime-star-setup-key-bindings ()
+(defun slime-star--setup-key-bindings ()
   (define-key sldb-mode-map "Q" 'sldb-kill-all-buffers))
 
 (defun slime-star--setup-menus ()
@@ -69,7 +69,7 @@
   (:swank-dependencies slime-star)
   (:on-load
    ;; setup key bindings
-   (slime-star-setup-key-bindings)
+   (slime-star--setup-key-bindings)
    ;; add submenu to SLIME menu
    (slime-star--setup-menus)
 
