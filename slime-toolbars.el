@@ -19,6 +19,14 @@
   :type '(set symbol)
   :group 'slime-star)
 
+(defcustom slime-toolbars-sldb-tool-bar-spec
+  '(sldb-step
+    sldb-next
+    sldb-out)
+  "SLDB toolbar spec."
+  :type '(set symbol)
+  :group 'slime-star)
+
 (defvar slime-tool-bar-icons
   '((slime-compile-defun . "compile")
     (slime-eval-last-expression . "evaluate")
@@ -32,6 +40,11 @@
     (slime-compile-file . "compile-file")
     (slime-load-file . "load-file")
     (slime-load-system . "load-system")))
+
+(defvar sldb-tool-bar-icons
+  '((sldb-step . "step")
+    (sldb-next . "next")
+    (sldb-out . "finish")))
 
 (defun create-tool-bar-map-from-spec (spec default-map icons)
   "Create a tool-bar map from SPEC.
@@ -62,25 +75,17 @@ ICONS should be an association list with (COMMAND . ICON-NAME)."
 (defvar slime-tool-bar-map)
 
 (defun slime-toolbars--init-tool-bar-map ()
-  (setf slime-tool-bar-map
+  (setq slime-tool-bar-map
 	(create-tool-bar-map-from-spec slime-toolbars-tool-bar-spec
 				       slime-mode-map slime-tool-bar-icons)))
 
 (defvar sldb-tool-bar-map)
 
 (defun slime-toolbars--init-sldb-tool-bar-map ()
-  (setf sldb-tool-bar-map
-	(let ((map (make-sparse-keymap)))
-	  (tool-bar-local-item-from-menu 'sldb-step "step" map sldb-mode-map
-					 :label "Step in"
-					 :vert-only t)
-	  (tool-bar-local-item-from-menu 'sldb-next "next" map sldb-mode-map
-					 :label "Step next"
-					 :vert-only t)
-	  (tool-bar-local-item-from-menu 'sldb-out "finish" map sldb-mode-map
-					 :label "Step out"
-					 :vert-only t)
-	  map)))
+  (setq sldb-tool-bar-map
+	(create-tool-bar-map-from-spec slime-toolbars-sldb-tool-bar-spec
+				       sldb-mode-map
+				       sldb-tool-bar-icons)))
 
 (defun slime-toolbars--setup-tool-bar ()
   (slime-toolbars--init-tool-bar-map)
