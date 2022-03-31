@@ -10,7 +10,7 @@
 	  (tool-bar-local-item-from-menu 'slime-compile-defun "compile" map slime-mode-map
 					 :label "Compile"
 					 :vert-only t)
-	  (tool-bar-local-item-from-menu 'slime-eval-last-expression "break" map slime-mode-map
+	  (tool-bar-local-item-from-menu 'slime-eval-last-expression "evaluate" map slime-mode-map
 					 :rtl "break"
 					 :label "Evaluate"
 					 :vert-only t)
