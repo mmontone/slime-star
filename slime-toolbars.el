@@ -20,9 +20,16 @@
   :group 'slime-star)
 
 (defcustom slime-toolbars-sldb-tool-bar-spec
-  '(sldb-step
+  '(sldb-down
+    sldb-up |
+    sldb-toggle-details
+    sldb-show-source
+    sldb-eval-in-frame
+    sldb-inspect-in-frame |
+    sldb-step
     sldb-next
-    sldb-out)
+    sldb-out
+    sldb-quit)
   "SLDB toolbar spec."
   :type '(set symbol)
   :group 'slime-star)
@@ -44,7 +51,14 @@
 (defvar sldb-tool-bar-icons
   '((sldb-step . "step")
     (sldb-next . "next")
-    (sldb-out . "finish")))
+    (sldb-out . "finish")
+    (sldb-eval-in-frame . "evaluate")
+    (sldb-inspect-in-frame . "inspect")
+    (sldb-down . "down")
+    (sldb-up . "up")
+    (sldb-show-source . "jump-to")
+    (sldb-toggle-details . "all")
+    (sldb-quit . "stop")))
 
 (defun create-tool-bar-map-from-spec (spec default-map icons)
   "Create a tool-bar map from SPEC.
