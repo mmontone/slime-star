@@ -2,7 +2,7 @@
 
 (push (concat (file-name-directory load-file-name) "/images") image-load-path)
 
-(defcustom slime-toolbars-tool-bar-spec
+(defcustom slime-toolbars-slime-tool-bar-spec
   '(slime-compile-defun
     slime-eval-last-expression
     slime-inspect
@@ -20,7 +20,8 @@
   :group 'slime-star)
 
 (defcustom slime-toolbars-sldb-tool-bar-spec
-  '(sldb-down
+  '(
+    sldb-down
     sldb-up |
     sldb-toggle-details
     sldb-show-source
@@ -29,7 +30,8 @@
     sldb-step
     sldb-next
     sldb-out
-    sldb-quit)
+    sldb-quit
+    )
   "SLDB toolbar spec."
   :type '(set symbol)
   :group 'slime-star)
@@ -67,51 +69,53 @@ ICONS should be an association list with (COMMAND . ICON-NAME)."
   (let ((map (make-sparse-keymap)))
     (dolist (item spec)
       (let* ((command (cond
-		     ((symbolp item)
-		      item)
-		     ((listp item)
-		      (first item))
-		     (t (error "Invalid item: %s" item))))
-	    (separator-p (eql item '|))
-	    (from-map (or (and (listp item)
-			       (let ((map-symbol (cl-getf (rest item) :map)))
-				 (and map-symbol (eval map-symbol))))
-			  default-map))
-	    (icon (or (and (listp item)
-			   (cl-getf (rest item) :icon))
-		      (or separator-p (alist-get command icons))
-		      (error "No icon for: %s" command))))
-	(if separator-p
-	    (define-key-after map (make-vector 1 (gensym)) menu-bar-separator)
-	  (tool-bar-local-item-from-menu command icon map from-map))))
+                       ((symbolp item)
+                        item)
+                       ((listp item)
+                        (first item))
+                       (t (error "Invalid item: %s" item))))
+             (separator-p (eql item '|))
+             (from-map (or (and (listp item)
+                                (let ((map-symbol (cl-getf (rest item) :map)))
+                                  (and map-symbol (eval map-symbol))))
+                           default-map))
+             (icon (or separator-p
+		       (or
+			(and (listp item)
+                             (cl-getf (rest item) :icon))
+			(alist-get command icons)
+			(error "No icon for: %s" command)))))
+        (if separator-p
+            (define-key-after map (make-vector 1 (gensym)) menu-bar-separator)
+	  (tool-bar-local-item icon command command map))))
     map))
 
 (defvar slime-tool-bar-map)
 
-(defun slime-toolbars--init-tool-bar-map ()
+(defun slime-toolbars--init-slime-tool-bar-map ()
   (setq slime-tool-bar-map
-	(create-tool-bar-map-from-spec slime-toolbars-tool-bar-spec
-				       slime-mode-map slime-tool-bar-icons)))
+        (create-tool-bar-map-from-spec slime-toolbars-slime-tool-bar-spec
+                                       slime-mode-map slime-tool-bar-icons)))
 
 (defvar sldb-tool-bar-map)
 
 (defun slime-toolbars--init-sldb-tool-bar-map ()
   (setq sldb-tool-bar-map
-	(create-tool-bar-map-from-spec slime-toolbars-sldb-tool-bar-spec
-				       sldb-mode-map
-				       sldb-tool-bar-icons)))
+        (create-tool-bar-map-from-spec slime-toolbars-sldb-tool-bar-spec
+                                       sldb-mode-map
+                                       sldb-tool-bar-icons)))
 
-(defun slime-toolbars--setup-tool-bar ()
-  (slime-toolbars--init-tool-bar-map)
+(defun slime-toolbars-setup-tool-bars ()
+  (slime-toolbars--init-slime-tool-bar-map)
   (slime-toolbars--init-sldb-tool-bar-map)
   (add-hook 'slime-mode-hook
-	    (lambda ()
+            (lambda ()
               (setq-local tool-bar-map slime-tool-bar-map)))
   (add-hook 'slime-repl-mode-hook
-	    (lambda ()
+            (lambda ()
               (setq-local tool-bar-map slime-tool-bar-map)))
   (add-hook 'sldb-mode-hook
-	    (lambda ()
-	      (setq-local tool-bar-map sldb-tool-bar-map))))
+            (lambda ()
+              (setq-local tool-bar-map sldb-tool-bar-map))))
 
 (provide 'slime-toolbars)

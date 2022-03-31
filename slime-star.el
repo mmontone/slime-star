@@ -67,7 +67,7 @@
    (add-hook 'slime-connected-hook
 	     (lambda ()
 	       (when slime-star-use-toolbars
-		 (slime-toolbars--setup-tool-bar))
+		 (slime-toolbars-setup-tool-bars))
 	       (when slime-star-use-custom-stepper-highlighter
 		 (slime-stepper--install))))
    (advice-add 'slime-load-contribs :before #'slime-star--add-swank-path)
