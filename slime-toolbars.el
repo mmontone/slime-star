@@ -97,8 +97,7 @@ ICONS should be an association list with (COMMAND . ICON-NAME)."
 	  ;; properties in tool-bar-local-item
 	  ;; See 23.18.6 Tool bars
 	  (tool-bar-local-item icon command command map
-			       :visible t
-			       :keys ""
+			       :vert-only t ;; this disables labelled buttons
 			       :help (and (listp item)
 					  (cl-getf (rest item) :help))))))
     map))
