@@ -41,6 +41,10 @@ In your `.emacs`:
 (setq slime-contribs '(slime-fancy slime-star))
 ```
 
+## Screenshots
+
+![toolbars](screenshots/toolbars.png "Stepping using toolbar")
+
 License
 -------
 
