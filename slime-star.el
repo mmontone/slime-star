@@ -19,13 +19,21 @@
 ;;; Code:
 
 (require 'slime)
+(require 'slime-toolbars)
 
 (defgroup slime-star nil
   "SLIME Star (SLIME extensions)."
   :group 'slime)
 
 (defcustom slime-star-use-custom-stepper-highlighter nil
-  "Use custom stepper highlighter when enabled.")
+  "Use custom stepper highlighter when enabled."
+  :type 'boolean
+  :group 'slime-star)
+
+(defcustom slime-star-use-toolbars nil
+  "Use custom toolbars for SLIME buffers."
+  :type 'boolean
+  :group 'slime-star)
 
 (defun slime-room ()
   "Show Common Lisp ROOM information in an Emacs buffer."
@@ -117,10 +125,13 @@
    (slime-star--setup-key-bindings)
    ;; add submenu to SLIME menu
    (slime-star--setup-menus)
-   (when slime-star-use-custom-stepper-highlighter
-     (slime-star--install-stepper-highlighter))
+   (add-hook 'slime-connected-hook
+	     (lambda ()
+	       (when slime-star-use-toolbars
+		 (slime-toolbars--setup-tool-bar))
+	       (when slime-star-use-custom-stepper-highlighter
+		 (slime-star--install-stepper-highlighter))))
    (advice-add 'slime-load-contribs :before #'slime-star--add-swank-path)
-	     
    ))
 
 (provide 'slime-star)
