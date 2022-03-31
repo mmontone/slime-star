@@ -30,13 +30,33 @@
 	  (tool-bar-local-item-from-menu 'slime-load-system "load-system" map slime-mode-map)  
 	  map)))
 
+(defvar sldb-tool-bar-map)
+
+(defun slime-toolbars--init-sldb-tool-bar-map ()
+  (setf sldb-tool-bar-map
+	(let ((map (make-sparse-keymap)))
+	  (tool-bar-local-item-from-menu 'sldb-step "step" map sldb-mode-map
+					 :label "Step in"
+					 :vert-only t)
+	  (tool-bar-local-item-from-menu 'sldb-next "next" map sldb-mode-map
+					 :label "Step next"
+					 :vert-only t)
+	  (tool-bar-local-item-from-menu 'sldb-out "finish" map sldb-mode-map
+					 :label "Step out"
+					 :vert-only t)
+	  map)))
+
 (defun slime-toolbars--setup-tool-bar ()
   (slime-toolbars--init-tool-bar-map)
+  (slime-toolbars--init-sldb-tool-bar-map)
   (add-hook 'slime-mode-hook
 	    (lambda ()
               (setq-local tool-bar-map slime-tool-bar-map)))
   (add-hook 'slime-repl-mode-hook
 	    (lambda ()
-              (setq-local tool-bar-map slime-tool-bar-map))))
+              (setq-local tool-bar-map slime-tool-bar-map)))
+  (add-hook 'sldb-mode-hook
+	    (lambda ()
+	      (setq-local tool-bar-map sldb-tool-bar-map))))
 
 (provide 'slime-toolbars)
