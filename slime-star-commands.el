@@ -40,4 +40,4 @@
 	(sldb-show-frame-details)
 	(sldb-forward-frame)))))
 
-(provide 'slime-star-commands
+(provide 'slime-star-commands)
