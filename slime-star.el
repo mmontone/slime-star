@@ -19,6 +19,7 @@
 ;;; Code:
 
 (require 'slime)
+(require 'slime-stepper)
 (require 'slime-toolbars)
 
 (defgroup slime-star nil
@@ -75,29 +76,6 @@
 	(sldb-show-frame-details)
 	(sldb-forward-frame)))))
 
-(defvar slime--highlighted nil)
-
-(defun slime-star--highlight-sexp (&optional start end)
-  "Highlight the first sexp after point."
-  (slime--delete-highlights)
-  (let* ((start (or start (point)))
-	 (end (or end (save-excursion (ignore-errors (forward-sexp)) (point))))
-	 (overlay (make-overlay start end)))
-    (overlay-put overlay 'face 'secondary-selection)
-    (setq slime--highlighted overlay)))
-
-(defun slime--delete-highlights ()
-  (when slime--highlighted
-    (delete-overlay slime--highlighted)
-    (setq slime--highlighted nil)))
-
-(defun slime-star--install-stepper-highlighter ()
-  "Use custom highlighter when stepping."
-  (advice-add 'slime-highlight-sexp :override 'slime-star--highlight-sexp)
-  (advice-add 'sldb-quit :after 'slime--delete-highlights)
-  (advice-add 'sldb-abort :after 'slime--delete-highlights)
-  (advice-add 'slime-display-eval-result :after (lambda (x) (slime--delete-highlights))))
-
 (defun slime-star--setup-key-bindings ()
   (define-key sldb-mode-map "Q" 'sldb-kill-all-buffers))
 
@@ -130,7 +108,7 @@
 	       (when slime-star-use-toolbars
 		 (slime-toolbars--setup-tool-bar))
 	       (when slime-star-use-custom-stepper-highlighter
-		 (slime-star--install-stepper-highlighter))))
+		 (slime-stepper--install))))
    (advice-add 'slime-load-contribs :before #'slime-star--add-swank-path)
    ))
 
