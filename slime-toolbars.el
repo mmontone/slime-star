@@ -1,37 +1,43 @@
+;;; slime-toolbars.el --- Toolbars for SLIME
+
+;;; Commentary:
+;; 
+
 (require 'slime)
+
+;;; Code:
 
 (push (concat (file-name-directory load-file-name) "/images") image-load-path)
 
 (defcustom slime-toolbars-slime-tool-bar-spec
-  '(slime-compile-defun
-    slime-eval-last-expression
-    slime-inspect
-    slime-edit-definition |
-    slime-break-on-entry
-    slime-step-on-entry
-    slime-trace
-    (slime-help-symbol :map slime-help-mode-map) |
-    lisp-system-browser
-    slime-load-file
-    slime-compile-file
-    slime-load-system)
+  '((slime-compile-defun :help "Compile expression")
+    (slime-eval-last-expression :help "Evaluate expression")
+    (slime-inspect :help "Inspect expression")
+    (slime-edit-definition :help "Goto definition") |
+    (slime-break-on-entry :help "Break on entry")
+    (slime-step-on-entry :help "Step on entry")
+    (slime-trace :help "Trace function")
+    (slime-help-symbol :map slime-help-mode-map
+		       :help "Definition documentation") |
+    (lisp-system-browser :help "Open Lisp browser")
+    (slime-load-file :help "Load Lisp file")
+    (slime-compile-file :help "Compile Lisp file")
+    (slime-load-system :help "Load ASDF system"))
   "SLIME toolbar spec."
   :type '(set symbol)
   :group 'slime-star)
 
 (defcustom slime-toolbars-sldb-tool-bar-spec
-  '(
-    sldb-down
-    sldb-up |
-    sldb-toggle-details
-    sldb-show-source
-    sldb-eval-in-frame
-    sldb-inspect-in-frame |
-    sldb-step
-    sldb-next
-    sldb-out
-    sldb-quit
-    )
+  '((sldb-down :help "Go to frame down")
+    (sldb-up :help "Go to frame up") |
+    (sldb-toggle-details :help "Toggle frame details")
+    (sldb-show-source :help "Go to frame source")
+    (sldb-eval-in-frame :help "Evaluate in frame")
+    (sldb-inspect-in-frame :help "Inspect in frame") |
+    (sldb-step :help "Step in")
+    (sldb-next :help "Step next")
+    (sldb-out :help "Step out")
+    (sldb-quit :help "Quit debugger"))
   "SLDB toolbar spec."
   :type '(set symbol)
   :group 'slime-star)
@@ -87,7 +93,14 @@ ICONS should be an association list with (COMMAND . ICON-NAME)."
 			(error "No icon for: %s" command)))))
         (if separator-p
             (define-key-after map (make-vector 1 (gensym)) menu-bar-separator)
-	  (tool-bar-local-item icon command command map))))
+	  ;; See 23.18.1.2 Extended Menu Items for the list of available
+	  ;; properties in tool-bar-local-item
+	  ;; See 23.18.6 Tool bars
+	  (tool-bar-local-item icon command command map
+			       :visible t
+			       :keys ""
+			       :help (and (listp item)
+					  (cl-getf (rest item) :help))))))
     map))
 
 (defvar slime-tool-bar-map)
@@ -119,3 +132,7 @@ ICONS should be an association list with (COMMAND . ICON-NAME)."
               (setq-local tool-bar-map sldb-tool-bar-map))))
 
 (provide 'slime-toolbars)
+
+(provide 'slime-toolbars)
+
+;;; slime-toolbars.el ends here
