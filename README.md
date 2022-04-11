@@ -41,6 +41,10 @@ In your `.emacs`:
 (setq slime-contribs '(slime-fancy slime-star))
 ```
 
+## Configuration
+
+You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-breakpoints` to enable some of the features (experimental and opinionated features are disabled by default). And then restart Emacs (not all changes are immediatly applied).
+
 ## Screenshots
 
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
