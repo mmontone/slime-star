@@ -22,6 +22,7 @@
 (require 'slime-stepper)
 (require 'slime-toolbars)
 (require 'slime-star-commands)
+(require 'slime-stream-inspector)
 
 (defgroup slime-star nil
   "SLIME Star (SLIME extensions)."
@@ -57,7 +58,7 @@
   "SLIME with extra extensions preinstalled."
   (:authors "Mariano Montone")
   (:license "GPL")
-  (:slime-dependencies quicklisp-systems quicksearch slime-help system-browser slime-breakpoints)
+  (:slime-dependencies quicklisp-systems quicksearch slime-help system-browser slime-breakpoints slime-stream-inspector)
   (:swank-dependencies slime-star)
   (:on-load
    ;; setup key bindings
