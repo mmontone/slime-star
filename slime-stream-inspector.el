@@ -53,7 +53,7 @@ Example: For #<CLOG-GUI:CLOG-GUI-WINDOW {1004611BC3}>, it returns \"1004611BC3\"
 
 (defun slime-stream-inspector-init ())
 
-(define-slime-contrib stream-inspector
+(define-slime-contrib slime-stream-inspector
   "SLIME extension for inspecting objects printed in output streams."
   (:authors "Mariano Montone")
   (:license "GPL")

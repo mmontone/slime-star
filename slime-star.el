@@ -22,7 +22,6 @@
 (require 'slime-stepper)
 (require 'slime-toolbars)
 (require 'slime-star-commands)
-(require 'slime-stream-inspector)
 
 (defgroup slime-star nil
   "SLIME Star (SLIME extensions)."
