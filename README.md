@@ -10,7 +10,7 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 - [Quicklisp Systems](https://github.com/mmontone/quicklisp-systems)
 - [Quicksearch utility](https://github.com/tkych/quicksearch)
 - [SLIME Breakpoints](https://github.com/mmontone/slime-breakpoints)
-- [Slite](https://github.com/tdrhq/slite/)
+- Inspect objects from their printed representation in output streams.
 
 It also adds some custom utilities and menus.
 
@@ -50,6 +50,14 @@ You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-b
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
 ![slime-docs](https://github.com/mmontone/slime-doc-contribs/blob/4b404d33ad0b43810293383894ab7df0a934fce5/slime-help.png "Improved online documentation")
 ![quicklisp-systems](https://github.com/mmontone/quicklisp-systems/blob/acacb3ac78bca1336360ccca64ceea0b31273cd8/screenshot.png "Quicklisp systems browsing")
+
+## Output stream inspector
+
+**EXPERIMENTAL**
+
+SLIME does not provide a way of inspecting objects printed to output streams; say an object is printed to some stream: `#<PERSON {100587C0C3}>`, there's no way to access and inspect the object printed.
+
+SLIME ⭐ comes with an extension for inspecting objects that are printed to output streams. To enable, evaluate in Lisp: `(setf stream-inspector:*persistent-pointers* t)`. Then from emacs, move the cursor to some printed object, and `M-x slime-inspect-printed`.
 
 License
 -------
