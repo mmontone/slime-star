@@ -23,11 +23,35 @@
 (defun slime-inspect-printed ()
   "Inspect printed object at point."
   (interactive)
-  (let ((obj-address-str (sti--parse-sbcl-address)))
-    (when obj-address-str
-      (let ((obj-address (string-to-number obj-address-str 16)))
-        (when obj-address
-          (slime-inspect (format "(stream-inspector:get-lisp-obj-by-address %d)" obj-address)))))))
+  (cl-block nil
+    ;; First try with persistent pointers:
+    (let ((obj-persistent-pointer (sti--parse-persistent-object-pointer)))
+      (when obj-persistent-pointer
+	(slime-inspect (format "(stream-inspector:get-lisp-obj-by-persistent-pointer %d)" obj-persistent-pointer))
+	(cl-return)))
+    ;; If couldn't find persistent pointer, try with object address:
+    (let ((obj-address-str (sti--parse-sbcl-address)))
+      (when obj-address-str
+	(let ((obj-address (string-to-number obj-address-str 16)))
+          (when obj-address
+            (slime-inspect (format "(stream-inspector:get-lisp-obj-by-address %d)" obj-address))))))))
+
+(defun sti--parse-persistent-object-pointer ()
+  "Try to parse object persistent pointer."
+  (let (from to)
+    (save-excursion
+      (search-backward "#<")
+      (setf to (point))
+      (search-backward "#")
+      (setf from (point))
+      (when (and from to)
+	(let ((substr (buffer-substring-no-properties (1+ from) to)))
+	  (when (every (lambda (char)
+			 (<= ?0 char ?9))
+		       substr)
+	    (let ((pointer (string-to-number substr)))
+	      (when (not (zerop pointer))
+		pointer))))))))
 
 (defun slime-send-printed-to-repl ()
   "Send printed object to SLIME repl."
