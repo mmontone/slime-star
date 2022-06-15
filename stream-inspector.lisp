@@ -8,7 +8,9 @@
 (in-package :stream-inspector)
 
 (defvar *printed-counter* 0)
-(defvar *printed-objects* (make-hash-table :weakness :value))
+(defvar *printed-objects*
+  #-ccl(make-hash-table :weakness :value)
+  #+ccl(make-hash-table :weak :value))
 (defvar *persistent-pointers* nil)
 
 ;; When *PERSISTENT-POINTERS* is enabled, CLOS objects are printed with a persistent pointer at the beggining.
