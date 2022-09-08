@@ -57,7 +57,7 @@
   "SLIME with extra extensions preinstalled."
   (:authors "Mariano Montone")
   (:license "GPL")
-  (:slime-dependencies quicklisp-systems quicksearch slime-help system-browser slime-breakpoints slime-stream-inspector)
+  (:slime-dependencies quicklisp-systems quicksearch slime-help system-browser-cl slime-breakpoints slime-stream-inspector)
   (:swank-dependencies slime-star)
   (:on-load
    ;; setup key bindings
