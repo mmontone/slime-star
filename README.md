@@ -46,7 +46,7 @@ In your `.emacs`:
 You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-breakpoints` to enable some of the features (experimental and opinionated features are disabled by default). And then restart Emacs (not all changes are immediatly applied).
 
 ## Screenshots
-
+![system-browser](https://github.com/mmontone/lisp-system-browser/raw/master/lisp-system-browser.png)
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
 ![slime-docs](https://github.com/mmontone/slime-doc-contribs/blob/4b404d33ad0b43810293383894ab7df0a934fce5/slime-help.png "Improved online documentation")
 ![quicklisp-systems](https://github.com/mmontone/quicklisp-systems/blob/acacb3ac78bca1336360ccca64ceea0b31273cd8/screenshot.png "Quicklisp systems browsing")
