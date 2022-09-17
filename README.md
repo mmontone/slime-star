@@ -48,6 +48,8 @@ You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-b
 ## Screenshots
 ### System browser
 ![system-browser](https://github.com/mmontone/lisp-system-browser/raw/master/lisp-system-browser.png "System browser")
+### Quickload with completion
+![quickload completion](https://github.com/mmontone/quicklisp-systems/raw/ee50353464c32fb67e370b267fd3bddc64a295d5/completion.gif "Quickload with completion")
 ### Breakpoints, stepping and toolbars
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
 ### Improved documentation mode
