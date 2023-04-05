@@ -22,6 +22,7 @@
 (require 'slime-stepper)
 (require 'slime-toolbars)
 (require 'slime-star-commands)
+(require 'inline-message)
 
 (defgroup slime-star nil
   "SLIME Star (SLIME extensions)."
@@ -36,6 +37,36 @@
   "Use custom toolbars for SLIME buffers."
   :type 'boolean
   :group 'slime-star)
+
+;; -- Display evaluation results in buffer -------------------
+
+;; This is not implemented very prettily.
+;; Function advice is used to hook into SLIME machinery for displaying evaluation results.
+
+(defcustom slime-star-display-eval-result-in-buffer nil
+  "Temporarily print SLIME evaluations at current position in buffer."
+  :type 'boolean
+  :group 'slime-star)
+
+(defvar slime-current-buffer nil
+  "Saved value of `current-buffer' before SLIME switches to using the connection buffer as `current-buffer'.
+This is used by the `inline-message' display functions, as it needs to know the user's buffer.")
+
+(defun slime-star-save-current-buffer (form)
+  "Save current buffer and call `slime-eval-with-transcript'."
+  (setq slime-current-buffer (current-buffer)))
+
+(defun slime-star-display-eval-result (value)
+  "Maybe show evaluation result in buffer too."
+  (when slime-star-display-eval-result-in-buffer
+    (with-current-buffer slime-current-buffer
+      (inline-message value))))
+
+(advice-add 'slime-eval-with-transcript
+	    :before #'slime-star-save-current-buffer)
+
+(advice-add 'slime-display-eval-result
+	    :after #'slime-star-display-eval-result)
 
 (defun slime-star--setup-key-bindings ()
   (define-key sldb-mode-map "Q" 'sldb-kill-all-buffers))
