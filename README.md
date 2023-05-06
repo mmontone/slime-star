@@ -29,7 +29,7 @@ git clone --recursive https://github.com/mmontone/slime-star.git
 Install some dependencies from Quicklisp:
 
 ```lisp
-(ql:quickload '(:asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite))
+(ql:quickload '(:asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite :montezuma :chipz :archive :string-case))
 ```
 
 In your `.emacs`:
