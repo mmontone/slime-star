@@ -13,3 +13,6 @@
 [submodule "quicklisp-systems"]
 	path = quicklisp-systems
 	url = https://github.com/mmontone/quicklisp-systems.git
+[submodule "quicklisp-apropos"]
+	path = quicklisp-apropos
+	url = https://github.com/mmontone/quicklisp-apropos
