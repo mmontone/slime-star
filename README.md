@@ -10,6 +10,7 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 - [Quicklisp Systems](https://github.com/mmontone/quicklisp-systems)
 - [Quicksearch utility](https://github.com/tkych/quicksearch)
 - [SLIME Breakpoints](https://github.com/mmontone/slime-breakpoints)
+- [Quicklisp apropos](https://github.com/mmontone/quicklisp-apropos)
 - Inspect objects from their printed representation in output streams.
 
 It also adds some custom utilities and menus.
