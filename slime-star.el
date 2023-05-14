@@ -38,6 +38,26 @@
   :type 'boolean
   :group 'slime-star)
 
+;; -- Highlight expression before evaluating it ----------------------------
+
+(defun slime-last-expression-region ()
+  "Return last expression at point, and its region."
+  (let (start end)
+    (cl-values
+     (buffer-substring-no-properties
+      (save-excursion (backward-sexp) (setq start (point)))
+      (setq end (point)))
+     start end)))
+
+(defun slime-highlight-last-expression ()
+  "Highlight last expression."
+  (cl-multiple-value-bind (exp start end)
+      (slime-last-expression-region)
+    (slime-flash-region start end)))
+
+(advice-add 'slime-eval-last-expression
+	    :before #'slime-highlight-last-expression)
+
 ;; -- Display evaluation results in buffer -------------------
 
 ;; This is not implemented very prettily.
