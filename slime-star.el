@@ -79,8 +79,10 @@ This is used by the `inline-message' display functions, as it needs to know the 
 (defun slime-star-display-eval-result (value)
   "Maybe show evaluation result in buffer too."
   (when slime-star-display-eval-result-in-buffer
-    (with-current-buffer slime-current-buffer
-      (inline-message value))))
+    (if (buffer-live-p slime-current-buffer)
+	(with-current-buffer slime-current-buffer
+	  (inline-message value))
+      (slime-message "%s" value))))
 
 (advice-add 'slime-eval-with-transcript
 	    :before #'slime-star-save-current-buffer)
