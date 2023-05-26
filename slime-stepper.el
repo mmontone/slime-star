@@ -22,6 +22,8 @@
   (advice-add 'slime-highlight-sexp :override 'slime-stepper--highlight-sexp)
   (advice-add 'sldb-quit :after 'slime--delete-highlights)
   (advice-add 'sldb-abort :after 'slime--delete-highlights)
+  (advice-add 'sldb-continue :after 'slime--delete-highlights)
+  (advice-add 'sldb-invoke-restart :after 'slime--delete-highlights)
   (advice-add 'slime-display-eval-result :after (lambda (x) (slime--delete-highlights))))
 
 (provide 'slime-stepper)
