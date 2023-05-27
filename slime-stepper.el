@@ -11,7 +11,7 @@
     (overlay-put overlay 'face 'secondary-selection)
     (setq slime--highlighted overlay)))
 
-(defun slime--delete-highlights ()
+(defun slime--delete-highlights (&optional _args)
   (when slime--highlighted
     (delete-overlay slime--highlighted)
     (setq slime--highlighted nil)))
