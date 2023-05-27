@@ -103,6 +103,12 @@ This is used by the `inline-message' display functions, as it needs to know the 
 
 (defvar slime-star--load-path (file-name-directory load-file-name))
 
+;; Install Info files
+(require 'info)
+(add-to-list 'Info-default-directory-list (concat slime-star--load-path "info"))
+(setq Info-directory-list nil)
+(info-initialize)
+
 (defun slime-star--add-swank-path ()
   (slime-eval `(cl:progn (cl:push ,slime-star--load-path swank::*load-path*) nil)))
 
