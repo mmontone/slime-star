@@ -23,6 +23,8 @@
 (require 'slime-toolbars)
 (require 'slime-star-commands)
 (require 'inline-message)
+(require 'info)
+(require 'info-look)
 
 (defgroup slime-star nil
   "SLIME Star (SLIME extensions)."
@@ -103,11 +105,24 @@ This is used by the `inline-message' display functions, as it needs to know the 
 
 (defvar slime-star--load-path (file-name-directory load-file-name))
 
-;; Install Info files
-(require 'info)
+;;--- ANSI Common Lisp spec in Info format ------------------------
+
 (add-to-list 'Info-default-directory-list (concat slime-star--load-path "info"))
 (setq Info-directory-list nil)
 (info-initialize)
+
+(info-lookup-add-help
+    :mode 'lisp-mode
+    :regexp "[^][()'\" \t\n]+"
+    :ignore-case t
+    :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+
+(defun slime-star-ansicl-lookup (symbol-name)
+  (info-lookup-symbol (slime-cl-symbol-name symbol-name) 'lisp-mode))
+
+(setq slime-help-ansicl-lookup-function 'slime-star-ansicl-lookup)
+
+;;--- SLIME contrib -----------------------------------------------
 
 (defun slime-star--add-swank-path ()
   (slime-eval `(cl:progn (cl:push ,slime-star--load-path swank::*load-path*) nil)))
