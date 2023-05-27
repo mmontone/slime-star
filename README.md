@@ -12,6 +12,7 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 - [SLIME Breakpoints](https://github.com/mmontone/slime-breakpoints)
 - [Quicklisp apropos](https://github.com/mmontone/quicklisp-apropos)
 - Inspect objects from their printed representation in output streams.
+- Access to dpans3 based ANSICL spec in Emacs Info format.
 
 It also adds some custom utilities and menus.
 
