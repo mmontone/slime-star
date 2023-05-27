@@ -56,6 +56,7 @@ You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-b
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
 ### Improved documentation mode
 ![slime-docs](https://github.com/mmontone/slime-doc-contribs/blob/4b404d33ad0b43810293383894ab7df0a934fce5/slime-help.png "Improved online documentation")
+![ansicl-info](screenshots/ansicl-info.png "ANSICL Info")
 ### Quicklisp system browsing
 ![quicklisp-systems](https://github.com/mmontone/quicklisp-systems/blob/acacb3ac78bca1336360ccca64ceea0b31273cd8/screenshot.png "Quicklisp systems browsing")
 
