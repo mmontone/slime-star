@@ -54,6 +54,7 @@ You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-b
 ![quickload completion](https://github.com/mmontone/quicklisp-systems/raw/ee50353464c32fb67e370b267fd3bddc64a295d5/completion.gif "Quickload with completion")
 ### Breakpoints, stepping and toolbars
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
+![debugger-context-evaluation](https://github.com/mmontone/slime-breakpoints/raw/master/sldb-source-eval.png "Debugger context evaluation")
 ### Improved documentation mode
 ![slime-docs](https://github.com/mmontone/slime-doc-contribs/blob/4b404d33ad0b43810293383894ab7df0a934fce5/slime-help.png "Improved online documentation")
 ![ansicl-info](screenshots/ansicl-info.png "ANSICL Info")
