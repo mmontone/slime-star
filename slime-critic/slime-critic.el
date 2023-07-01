@@ -42,6 +42,32 @@
     (lambda (critiques)
       (slime-critic--show-critiques critiques))))
 
+(defun slime-critic--create-note (critique buffer)
+  "Create a slime-note from CRITIQUE."
+  ;; See slime-goto-source-location for location format
+  (list :severity :style-warning
+        :message (cdr critique)
+        :location (list :location
+			(list :buffer buffer)
+			(list :position (car critique))
+			nil)
+        :source-context nil))
+
+(defun slime-critic-critique-buffer ()
+  "Critique current buffer."
+  (interactive)
+  (unless buffer-file-name
+    (user-error "No file visited in current buffer"))
+  (let ((buffer (current-buffer)))
+    (slime-eval-async `(slime-critic:critique-file ,buffer-file-name)
+      (lambda (critiques)
+        (slime-critic--show-critiques critiques)
+        (let ((notes (mapcar (lambda (c)
+			       (slime-critic--create-note c buffer))
+			     critiques)))
+          (with-current-buffer buffer
+            (slime-highlight-notes notes)))))))
+
 (provide 'slime-critic)
 
 ;;; slime-critic.el ends here

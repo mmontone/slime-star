@@ -1,6 +1,6 @@
 (defpackage :slime-critic
   (:use :cl)
-  (:export :critique-file))
+  (:export #:critique-file))
 
 (in-package :slime-critic)
 
@@ -14,21 +14,42 @@
           (write-string line s)
           (terpri s))))))
 
-(declaim (ftype (function ((or pathname string) &optional list) list) critique-file))
+(declaim (ftype (function ((or pathname string) &key (:names list)
+                                                (:return (member :simple :slime-notes)))
+                          list)
+                critique-file))
 (defun critique-file
-    (file &optional (names (lisp-critic::get-pattern-names)))
+    (file &key (names (lisp-critic::get-pattern-names))
+            (return :simple))
   "Critique definitions found in FILE, using patterns in NAMES.
-The result is a list of (CONS file-position definition-critique)."
+The result depends on the value of RETURN:
+- :SIMPLE: a list of (CONS file-position definition-critique).
+- :SLIME-NOTES: the list of critiques in Emacs slime-note format."
   (let (critiques)
     (with-open-file (in file)
       (let ((eof (list nil)))
-        (do ((code (read in nil eof) (read in nil eof)))
+        (do ((file-position (file-position in) (file-position in))
+	     (code (read in nil eof) (read in nil eof)))
             ((eq code eof) (values))
           (let ((critique
                   (with-output-to-string (out)
                     (lisp-critic::critique-definition code out names))))
             (when (not (zerop (length critique)))
-              (push (cons (file-position in)
-                          (reformat-critique critique))
-                    critiques))))))
+              (setq critique (reformat-critique critique))
+              (case return
+                (:simple
+                 (push (cons file-position critique)
+                       critiques))
+                (:slime-notes
+                 (push (list :severity :STYLE-WARNING ;; :NOTE, :STYLE-WARNING, :WARNING, or :ERROR.
+                             :message critique
+                             :source-context nil
+                             ;; See slime-goto-source-location for location format
+                             :location (list :location
+                                             (list :file (princ-to-string file))
+                                             (list :position file-position 0)
+                                             nil))
+                       critiques))))))))
     (nreverse critiques)))
+
+(provide 'slime-critic)
