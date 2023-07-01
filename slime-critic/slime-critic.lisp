@@ -1,6 +1,6 @@
 (defpackage :slime-critic
   (:use :cl)
-  (:export #:critique-file))
+  (:export :critique-file))
 
 (in-package :slime-critic)
 
@@ -18,6 +18,7 @@
                                                 (:return (member :simple :slime-notes)))
                           list)
                 critique-file))
+
 (defun critique-file
     (file &key (names (lisp-critic::get-pattern-names))
             (return :simple))

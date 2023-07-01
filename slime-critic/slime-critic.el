@@ -26,13 +26,33 @@
 
 (require 'slime)
 
-(defun slime-critic--show-critiques (critiques)
-  "Show the Lisp CRITIQUES."
-  (let ((buffer (get-buffer-create "*slime-critic*")))
+;; A problem with compilation-mode is that it uses line and column for positions,
+;; but critiques contain raw file position.
+;; So we need to convert opening a buffer and line-number-at-pos
+
+(defun slime-critic--convert-file-positions-to-line (critiques file)
+  "Convert file positions in CRITIQUES for FILE."
+  (let ((buffer (find-file-noselect file)))
     (with-current-buffer buffer
+      (mapcar (lambda (critique)
+		(let ((line (line-number-at-pos (1+ (car critique)))))
+		  (cons line (cdr critique))))
+	      critiques))))
+
+(defun slime-critic--show-critiques (critiques file)
+  "Show the Lisp CRITIQUES."
+  (let ((buffer (get-buffer-create "*slime-critic*"))
+	(critiques (slime-critic--convert-file-positions-to-line critiques file)))
+    (with-current-buffer buffer
+      (setq buffer-read-only nil)
+      (erase-buffer)
       (dolist (critique critiques)
+	(insert (format "%s:%d:%d" file (car critique) 0))
+	(newline)
         (insert (cdr critique))
         (newline 2))
+      (compilation-mode)
+      (setq buffer-read-only t)
       (display-buffer buffer))))
 
 (defun slime-critic-critique-file (file)
@@ -40,7 +60,7 @@
   (interactive "fCritique file: ")
   (slime-eval-async `(slime-critic:critique-file ,file)
     (lambda (critiques)
-      (slime-critic--show-critiques critiques))))
+      (slime-critic--show-critiques critiques file))))
 
 (defun slime-critic--create-note (critique buffer)
   "Create a slime-note from CRITIQUE."
@@ -61,7 +81,7 @@
   (let ((buffer (current-buffer)))
     (slime-eval-async `(slime-critic:critique-file ,buffer-file-name)
       (lambda (critiques)
-        (slime-critic--show-critiques critiques)
+        (slime-critic--show-critiques critiques buffer-file-name)
         (let ((notes (mapcar (lambda (c)
 			       (slime-critic--create-note c buffer))
 			     critiques)))
