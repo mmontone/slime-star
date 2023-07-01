@@ -69,7 +69,7 @@
         :message (cdr critique)
         :location (list :location
 			(list :buffer buffer)
-			(list :position (car critique))
+			(list :position (1+ (car critique)))
 			nil)
         :source-context nil))
 
