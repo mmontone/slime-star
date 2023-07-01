@@ -90,6 +90,24 @@
           (with-current-buffer buffer
             (slime-highlight-notes notes)))))))
 
+(defun slime-critic--add-to-slime-menu ()
+  "Add slime-critic menu to slime menu."
+  (easy-menu-add-item 'menubar-slime nil
+		      '("Critic"
+			["Critique file" slime-critic-critique-file
+			 :help "Critique a file"]
+			["Critique buffer" slime-critic-critique-buffer
+			 :help "Critique a buffer"])))
+
+(define-slime-contrib slime-critic
+  "SLIME extension for lisp-critic"
+  (:authors "Mariano Montone")
+  (:license "GPL")
+  (:swank-dependencies slime-critic)
+  (:on-load
+   ;; add submenu to SLIME menu
+   (slime-critic--add-to-slime-menu)))
+
 (provide 'slime-critic)
 
 ;;; slime-critic.el ends here
