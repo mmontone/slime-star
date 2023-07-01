@@ -11,6 +11,7 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 - [Quicksearch utility](https://github.com/tkych/quicksearch)
 - [SLIME Breakpoints](https://github.com/mmontone/slime-breakpoints)
 - [Quicklisp apropos](https://github.com/mmontone/quicklisp-apropos)
+- [SLIME Critic](https://github.com/mmontone/slime-critic)
 - Inspect objects from their printed representation in output streams.
 - Access to dpans3 based ANSICL spec in Emacs Info format.
 
@@ -30,7 +31,7 @@ git clone --recursive https://github.com/mmontone/slime-star.git
 Install some dependencies from Quicklisp:
 
 ```lisp
-(ql:quickload '(:asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite :montezuma :chipz :archive :string-case))
+(ql:quickload '(:asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite :montezuma :chipz :archive :string-case :lisp-critic))
 ```
 
 In your `.emacs`:
@@ -51,15 +52,17 @@ You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-b
 ### System browser
 ![system-browser](https://github.com/mmontone/lisp-system-browser/raw/master/lisp-system-browser.png "System browser")
 ### Quickload with completion
-![quickload completion](https://github.com/mmontone/quicklisp-systems/raw/ee50353464c32fb67e370b267fd3bddc64a295d5/completion.gif "Quickload with completion")
+![quickload completion](https://github.com/mmontone/quicklisp-systems/raw/master/completion.gif "Quickload with completion")
 ### Breakpoints, stepping and toolbars
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
 ![debugger-context-evaluation](https://github.com/mmontone/slime-breakpoints/raw/master/sldb-source-eval.png "Debugger context evaluation")
 ### Improved documentation mode
-![slime-docs](https://github.com/mmontone/slime-doc-contribs/blob/4b404d33ad0b43810293383894ab7df0a934fce5/slime-help.png "Improved online documentation")
+![slime-docs](https://github.com/mmontone/slime-doc-contribs/raw/master/slime-help.png "Improved online documentation")
 ![ansicl-info](screenshots/ansicl-info.png "ANSICL Info")
+### Critic
+![slime-critic](https://github.com/mmontone/slime-critic/raw/master/screenshot.png "Scan your code for instances of bad Lisp programming practice.")
 ### Quicklisp system browsing
-![quicklisp-systems](https://github.com/mmontone/quicklisp-systems/blob/acacb3ac78bca1336360ccca64ceea0b31273cd8/screenshot.png "Quicklisp systems browsing")
+![quicklisp-systems](https://github.com/mmontone/quicklisp-systems/raw/master/screenshot.png "Quicklisp systems browsing")
 
 ## Output stream inspector
 
