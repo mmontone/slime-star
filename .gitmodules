@@ -16,3 +16,6 @@
 [submodule "quicklisp-apropos"]
 	path = quicklisp-apropos
 	url = https://github.com/mmontone/quicklisp-apropos
+[submodule "slime-critic"]
+	path = slime-critic
+	url = https://github.com/mmontone/slime-critic.git
