@@ -53,9 +53,10 @@ You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-b
 ![system-browser](https://github.com/mmontone/lisp-system-browser/raw/master/lisp-system-browser.png "System browser")
 ### Quickload with completion
 ![quickload completion](https://github.com/mmontone/quicklisp-systems/raw/master/completion.gif "Quickload with completion")
-### Breakpoints, stepping and toolbars
+### Breakpoints, stepping, toolsbars, evaluation and locals navigation
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
 ![debugger-context-evaluation](https://github.com/mmontone/slime-breakpoints/raw/master/sldb-source-eval.png "Debugger context evaluation")
+![locals navigation from source code](https://github.com/mmontone/slime-breakpoints/blob/master/slime-goto-frame-local.gif)
 ### Improved documentation mode
 ![slime-docs](https://github.com/mmontone/slime-doc-contribs/raw/master/slime-help.png "Improved online documentation")
 ![ansicl-info](screenshots/ansicl-info.png "ANSICL Info")
