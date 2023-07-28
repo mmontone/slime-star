@@ -22,7 +22,7 @@
 (require 'slime-stepper)
 (require 'slime-toolbars)
 (require 'slime-star-commands)
-(require 'slime-goto-frame-local)
+(require 'sldb-show-frame-local)
 (require 'inline-message)
 (require 'info)
 (require 'info-look)
@@ -139,7 +139,7 @@ This is used by the `inline-message' display functions, as it needs to know the 
    (slime-star--setup-key-bindings)
    ;; add submenu to SLIME menu
    (slime-star--setup-menus)
-   (slime-goto-frame-local-on-cursor-move)
+   (sldb-show-frame-local-on-cursor-move)
    (add-hook 'slime-connected-hook
 	     (lambda ()
 	       (when slime-star-use-toolbars
