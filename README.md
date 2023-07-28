@@ -49,19 +49,25 @@ In your `.emacs`:
 You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-breakpoints` to enable some of the features (experimental and opinionated features are disabled by default). And then restart Emacs (not all changes are immediatly applied).
 
 ## Screenshots
+
 ### System browser
 ![system-browser](https://github.com/mmontone/lisp-system-browser/raw/master/lisp-system-browser.png "System browser")
+
 ### Quickload with completion
 ![quickload completion](https://github.com/mmontone/quicklisp-systems/raw/master/completion.gif "Quickload with completion")
-### Breakpoints, stepping, toolsbars, evaluation and locals navigation
+
+### Breakpoints, stepping, toolbars, evaluation and locals navigation
 ![toolbars](screenshots/toolbars.png "Stepping using toolbar")
 ![debugger-context-evaluation](https://github.com/mmontone/slime-breakpoints/raw/master/sldb-source-eval.png "Debugger context evaluation")
-![locals navigation from source code](https://github.com/mmontone/slime-breakpoints/blob/master/slime-goto-frame-local.gif)
+![show frame locals](https://github.com/mmontone/slime-breakpoints/blob/master/sldb-show-frame-local.gif "Show frame locals")
+
 ### Improved documentation mode
 ![slime-docs](https://github.com/mmontone/slime-doc-contribs/raw/master/slime-help.png "Improved online documentation")
 ![ansicl-info](screenshots/ansicl-info.png "ANSICL Info")
+
 ### Critic
 ![slime-critic](https://github.com/mmontone/slime-critic/raw/master/screenshot.png "Scan your code for instances of bad Lisp programming practice.")
+
 ### Quicklisp system browsing
 ![quicklisp-systems](https://github.com/mmontone/quicklisp-systems/raw/master/screenshot.png "Quicklisp systems browsing")
 
