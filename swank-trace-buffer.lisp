@@ -29,3 +29,12 @@
                       trace))))))
 
 (pushnew 'send-trace-event swank-trace-dialog::*after-trace-hooks*)
+
+(pushnew 'handle-trace-event swank::*event-hook*)
+
+(defun handle-trace-event (connection event)
+  (swank::dcase event
+    ((:stb/trace ev)
+     (swank::encode-message event (swank::current-socket-io))
+     t)
+    (t nil)))

@@ -6,7 +6,7 @@
 
 (defun slime-trace-buffer-event-handler (event)
   (slime-dcase event
-    ((:STB/TRACE trace)
+    ((:stb/trace trace)
      (let ((buffer (get-buffer-create "*slime-trace*")))
        (with-current-buffer buffer
        (insert (prin1-to-string trace))
