@@ -1,3 +1,32 @@
+;;; slime-trace-buffer.el --- SLIME buffer for displaying traces  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2024  Mariano Montone
+
+;; Author: Mariano Montone <marianomontone@gmail.com>
+;; Keywords: lisp, tools
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;
+
+;;; Code:
+
+(provide 'slime-trace-buffer)
+;;; slime-trace-buffer.el ends here
+
 (require 'slime)
 (require 'cl-lib)
 (require 'anaphora)
@@ -23,6 +52,19 @@
   :type 'integer
   :group 'slime-trace-buffer)
 
+(defcustom slime-trace-buffer-use-buttons t
+  "Use buttons in SLIME Trace buffers."
+  :type 'boolean
+  :group 'slime-trace-buffer)
+
+(defun slime-trace-buffer--insert-button (label action &rest props)
+  (if slime-trace-buffer-use-buttons
+      (apply #'insert-text-button label
+             'action (lambda (_btn) (funcall action))
+             'follow-link t
+             props)
+    (insert label)))
+
 (defun slime-trace-buffer--insert-trace-enter (trace)
   (goto-char (point-max))
   (cl-labels ((indent ()
@@ -34,13 +76,19 @@
                        (insert string)))
     (let ((pos (point))
           (part 0))
-      (indsert (prin1-to-string (cl-getf trace ':level)))
+      (indent)
+      (slime-trace-buffer--insert-button
+       (prin1-to-string (cl-getf trace ':level))
+       (lambda () (slime-trace-buffer--inspect-trace trace))
+       'help-echo "Inspect trace")
       (insert ": ")
       (insert (prin1-to-string (cl-getf trace ':spec)))
       (newline)
       (dolist (arg (cl-getf trace ':args))
         (indsert "> ")
-        (insert arg)
+        (slime-trace-buffer--insert-button
+         arg (let ((trace-part part))
+               (lambda () (slime-trace-buffer--inspect-trace-part trace trace-part))))
         (incf part)
         (newline))
       ;;(goto-char pos)
@@ -64,7 +112,9 @@
       (newline)
       (dolist (retval (cl-getf trace ':retlist))
         (indsert "< ")
-        (insert retval)
+        (slime-trace-buffer--insert-button
+         retval (let ((trace-part part))
+                  (lambda () (slime-trace-buffer--inspect-trace-part trace trace-part))))
         (incf part)
         (newline)))))
 
@@ -84,7 +134,8 @@
          (slime-trace-buffer--insert-trace-exit trace)
          (newline)
          (unless (get-buffer-window)
-           (display-buffer buffer))))
+           (display-buffer buffer))
+         (goto-char (point-max))))
      t)
     (t nil)))
 
