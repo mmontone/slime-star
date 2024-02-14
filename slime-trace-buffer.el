@@ -85,7 +85,7 @@
       (insert (prin1-to-string (cl-getf trace ':spec)))
       (newline)
       (dolist (arg (cl-getf trace ':args))
-        (indsert "> ")
+        (indsert "< ")
         (slime-trace-buffer--insert-button
          arg (let ((trace-part part))
                (lambda () (slime-trace-buffer--inspect-trace-part (cl-getf trace ':id) trace-part :arg))))
@@ -111,7 +111,7 @@
       (insert (prin1-to-string (cl-getf trace ':spec)))
       (newline)
       (dolist (retval (cl-getf trace ':retlist))
-        (indsert "< ")
+        (indsert "> ")
         (slime-trace-buffer--insert-button
          retval (let ((trace-part part))
                   (lambda () (slime-trace-buffer--inspect-trace-part (cl-getf trace :id) trace-part :retval))))
