@@ -66,8 +66,10 @@
     (t nil)))
 
 (defun inspect-trace (id)
-  (swank::inspect-in-emacs (swank-trace-dialog::find-trace id)))
+  (swank::inspect-in-emacs (swank-trace-dialog::find-trace id))
+  "ok")
 
-(defun inspect-trace-part (id index)
+(defun inspect-trace-part (id index type)
   (let ((trace (swank-trace-dialog::find-trace id)))
-    (swank::inspect-in-emacs trace)))
+    (swank::inspect-in-emacs (swank-trace-dialog::find-trace-part id index type))
+    "ok"))
