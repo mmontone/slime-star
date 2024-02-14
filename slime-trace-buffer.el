@@ -79,7 +79,7 @@
       (indent)
       (slime-trace-buffer--insert-button
        (prin1-to-string (cl-getf trace ':level))
-       (lambda () (slime-trace-buffer--inspect-trace trace))
+       (lambda () (slime-trace-buffer--inspect-trace (cl-getf trace ':id)))
        'help-echo "Inspect trace")
       (insert ": ")
       (insert (prin1-to-string (cl-getf trace ':spec)))
@@ -88,7 +88,7 @@
         (indsert "> ")
         (slime-trace-buffer--insert-button
          arg (let ((trace-part part))
-               (lambda () (slime-trace-buffer--inspect-trace-part trace trace-part))))
+               (lambda () (slime-trace-buffer--inspect-trace-part (cl-getf trace ':id) trace-part :arg))))
         (incf part)
         (newline))
       ;;(goto-char pos)
@@ -105,7 +105,7 @@
                        (indent)
                        (insert string)))
     (goto-char (point-max))
-    (let ((part (length (cl-getf trace ':args))))
+    (let ((part 0))
       (indsert (prin1-to-string (cl-getf trace ':level)))
       (insert ": ")
       (insert (prin1-to-string (cl-getf trace ':spec)))
@@ -114,9 +114,15 @@
         (indsert "< ")
         (slime-trace-buffer--insert-button
          retval (let ((trace-part part))
-                  (lambda () (slime-trace-buffer--inspect-trace-part trace trace-part))))
+                  (lambda () (slime-trace-buffer--inspect-trace-part (cl-getf trace :id) trace-part :retval))))
         (incf part)
         (newline)))))
+
+(defun slime-trace-buffer--inspect-trace (id)
+  (slime-eval `(swank-trace-buffer::inspect-trace ,id)))
+
+(defun slime-trace-buffer--inspect-trace-part (id index type)
+  (slime-eval `(swank-trace-buffer::inspect-trace-part ,id ,index ',type)))
 
 (defun slime-trace-buffer-event-handler (event)
   (slime-dcase event
