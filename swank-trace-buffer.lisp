@@ -38,3 +38,6 @@
      (swank::encode-message event (swank::current-socket-io))
      t)
     (t nil)))
+
+(defun inspect-trace (id)
+  (swank::inspect-in-emacs (swank-trace-dialog::find-trace id)))
