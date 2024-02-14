@@ -35,6 +35,7 @@
     ((:spb/print printed)
      (let ((buffer (get-buffer-create "*slime-print*")))
        (with-current-buffer buffer
+         (goto-char (point-max))
          (insert (cl-getf printed :expr))
          (insert " => ")
          (insert-text-button (cl-getf printed :value)
@@ -44,7 +45,9 @@
                              'help-echo "Inspect")
          (newline)
          (unless (get-buffer-window)
-           (display-buffer buffer))))
+           (display-buffer buffer))
+         (unless (eq buffer (window-buffer (selected-window))) ;; buffer has focus
+           (set-window-point (get-buffer-window buffer) (point-max)))))
      t)
     (t nil)))
 
