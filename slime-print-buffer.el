@@ -6,7 +6,7 @@
 
 (defun slime-print-buffer-event-handler (event)
   (slime-dcase event
-    ((:spb/print key value)
+    ((:spb/print printed)
      (let ((buffer (get-buffer-create "*slime-print*")))
        (with-current-buffer buffer
          (insert (prin1-to-string key))
