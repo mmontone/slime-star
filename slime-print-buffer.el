@@ -1,3 +1,29 @@
+;;; slime-print-buffer.el --- SLIME print buffers    -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2024  Mariano Montone
+
+;; Author: Mariano Montone <marianomontone@gmail.com>
+;; Keywords: lisp, tools
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; SLIME print buffers
+
+;;; Code:
+
 (require 'slime)
 (require 'cl-lib)
 
@@ -11,9 +37,16 @@
        (with-current-buffer buffer
          (insert (cl-getf printed :expr))
          (insert " => ")
-         (insert (cl-getf printed :value))
+         (insert-text-button (cl-getf printed :value)
+                             'action (lambda (_btn)
+                                       (slime-eval `(swank-print-buffer::inspect-printed ,(cl-getf printed :id))))
+                             'follow-link t
+                             'help-echo "Inspect")
          (newline)
          (unless (get-buffer-window)
            (display-buffer buffer))))
      t)
     (t nil)))
+
+(provide 'slime-print-buffer)
+;;; slime-print-buffer.el ends here
