@@ -1,7 +1,10 @@
 (defpackage swank-trace-buffer
-  (:use :cl))
+  (:use :cl)
+  (:export :*print-width*))
 
 (in-package :swank-trace-buffer)
+
+(defvar *print-width* nil)
 
 ;; Code that uses a plain slime stream
 
@@ -24,13 +27,16 @@
     (if (null parent) 0
         (1+ (trace-level parent)))))
 
+(defun write-object (obj)
+  (swank::to-line obj *print-width*))
+
 (defun describe-trace-for-emacs (trace)
   (list :id (swank-trace-dialog::id-of trace)
         :parent (and (swank-trace-dialog::parent-of trace)
                      (swank-trace-dialog::id-of (swank-trace-dialog::parent-of trace)))
         :spec (swank-trace-dialog::spec-of trace)
-        :args (mapcar #'swank::to-line (swank-trace-dialog::args-of trace))
-        :retlist (mapcar #'swank::to-line (swank::ensure-list (swank-trace-dialog::retlist-of trace)))
+        :args (mapcar #'write-object (swank-trace-dialog::args-of trace))
+        :retlist (mapcar #'write-object (swank::ensure-list (swank-trace-dialog::retlist-of trace)))
         :level (trace-level trace)))
 
 ;; Code that sends special trace events to Emacs
