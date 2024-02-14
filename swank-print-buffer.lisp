@@ -10,11 +10,12 @@
 (defvar *record-printed-p* t)
 
 (defstruct printed
-  expr value)
+  id expr value)
 
 (defmacro prn (expr)
   `(let ((printed (make-printed :expr ',expr :value ,expr)))
      (when *record-printed-p*
+       (setf (printed-id printed) (fill-pointer *printed*))
        (vector-push-extend printed *printed*))
      (send-print-event printed)))
 
@@ -32,8 +33,9 @@
 ;; Code that sends special print events to Emacs
 
 (defun describe-for-emacs (printed)
-  (list :expr (prin1-to-string (printed-expr printed))
-        :value (princ-to-string (printed-value printed))))
+  (list :id (printed-id printed)
+        :expr (prin1-to-string (printed-expr printed))
+        :value (swank::to-line (printed-value printed))))
 
 (defun send-print-event (printed)
   (swank::with-connection (swank::*emacs-connection*)
@@ -58,4 +60,5 @@
     (aref *printed* id)))
 
 (defun inspect-printed (id)
-  (swank::inspect-in-emacs (find-printed id)))
+  (swank::inspect-in-emacs (printed-value (find-printed id)))
+  "ok")
