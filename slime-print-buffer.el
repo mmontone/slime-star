@@ -9,9 +9,9 @@
     ((:spb/print printed)
      (let ((buffer (get-buffer-create "*slime-print*")))
        (with-current-buffer buffer
-         (insert (prin1-to-string key))
+         (insert (cl-getf printed :expr))
          (insert " => ")
-         (insert (prin1-to-string value))
+         (insert (cl-getf printed :value))
          (newline)
          (unless (get-buffer-window)
            (display-buffer buffer))))

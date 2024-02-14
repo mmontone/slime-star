@@ -13,13 +13,10 @@
   expr value)
 
 (defmacro prn (expr)
-  (if *record-printed-p*
-      `(let ((printed (make-printed :expr ',expr :value ,expr)))
-         (print-out ',expr ,expr))
-      `(print-out ',expr ,expr)))
-
-(defun print-out (expr value)
-  (send-print-event (make-printed :expr expr :value value)))
+  `(let ((printed (make-printed :expr ',expr :value ,expr)))
+     (when *record-printed-p*
+       (vector-push-extend printed *printed*))
+     (send-print-event printed)))
 
 ;; Code that uses a plain slime stream
 
@@ -35,8 +32,8 @@
 ;; Code that sends special print events to Emacs
 
 (defun describe-for-emacs (printed)
-  (list :expr (printed-expr printed)
-        :value (printed-value printed)))
+  (list :expr (prin1-to-string (printed-expr printed))
+        :value (princ-to-string (printed-value printed))))
 
 (defun send-print-event (printed)
   (swank::with-connection (swank::*emacs-connection*)
