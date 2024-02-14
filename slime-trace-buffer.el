@@ -15,3 +15,25 @@
          (display-buffer buffer))))
      t)
     (t nil)))
+
+;; (setq outline-minor-mode-use-buttons t)
+
+;; (setq-local outline-regexp "\s*[0-100]\:")
+
+;; (defun insert-test ()
+;;   (let ((pos (point)))
+;;     (insert "0: lalal")
+;;     (newline)
+;;     (insert "> 34343")
+;;     (newline)
+;;     (insert "< aaa")
+;;     (newline)
+;;     (insert "  1: asfasdf")
+;;     (newline)
+;;     (insert "  < 'asdf")
+;;     (newline)
+;;     (goto-char pos)
+;;     (outline-hide-subtree)
+;;     (outline-hide-leaves)))
+
+;; (setq-local header-line-format "[RET] open [i] inspect")
