@@ -141,7 +141,8 @@
          (newline)
          (unless (get-buffer-window)
            (display-buffer buffer))
-         (goto-char (point-max))))
+         (unless (eq buffer (window-buffer (selected-window))) ;; buffer has focus
+           (set-window-point (get-buffer-window buffer) (point-max)))))
      t)
     (t nil)))
 
