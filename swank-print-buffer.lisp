@@ -12,12 +12,18 @@
 (defstruct printed
   id expr value)
 
+(defun %make-printed (&rest args)
+  (let ((printed (apply #'make-printed args)))
+    (when *record-printed-p*
+      (setf (printed-id printed) (fill-pointer *printed*))
+      (vector-push-extend printed *printed*))
+    printed))
+
 (defmacro prn (expr)
-  `(let ((printed (make-printed :expr ',expr :value ,expr)))
-     (when *record-printed-p*
-       (setf (printed-id printed) (fill-pointer *printed*))
-       (vector-push-extend printed *printed*))
-     (send-print-event printed)))
+  (let ((value (gensym "EXPR")))
+    `(let ((,value ,expr))
+       (send-print-event (%make-printed :expr ',expr :value ,value))
+       ,value)))
 
 ;; Code that uses a plain slime stream
 
