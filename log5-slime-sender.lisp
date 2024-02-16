@@ -4,6 +4,19 @@
 
 (in-package :log5-slime-sender)
 
+;; Example: 
+
+;; Use swank-buffer-streams
+#|
+(log5:start-sender 'slime-stream-sender
+(log5:stream-sender :location (swank-buffer-streams:make-buffer-output-stream :log5))  
+:category-spec '(log5:info+)  
+:output-spec '(log5:time log5:message log5:context))
+
+(log5:stop-sender 'slime-stream-sender)
+
+|#
+
 ;; Code that uses a plain slime stream
 
 (defclass slime-stream-sender (log5:stream-sender)
