@@ -6,6 +6,10 @@
 
 (defvar *print-width* nil)
 
+;; Example: use swank-buffer-streams as *trace-output*
+
+;; (setf *trace-output* (swank-buffer-streams:make-buffer-output-stream :trace))
+
 ;; Code that uses a plain slime stream
 
 (defvar *trace-stream* (swank-buffer-streams:make-buffer-output-stream :trace))
