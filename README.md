@@ -12,6 +12,7 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 - [SLIME Breakpoints](https://github.com/mmontone/slime-breakpoints)
 - [Quicklisp apropos](https://github.com/mmontone/quicklisp-apropos)
 - [SLIME Critic](https://github.com/mmontone/slime-critic)
+- Use dedicated Emacs buffers for output streams.
 - Inspect objects from their printed representation in output streams.
 - Access to dpans3 based ANSICL spec in Emacs Info format.
 
@@ -71,7 +72,15 @@ You'll need to `M-x customize-group slime-star` and `M-x customize-group slime-b
 ### Quicklisp system browsing
 ![quicklisp-systems](https://github.com/mmontone/quicklisp-systems/raw/master/screenshot.png "Quicklisp systems browsing")
 
-## Output stream inspector
+### Dedicated Emacs buffers for output streams
+
+Use:
+
+- `M-x slime-toggle-output-buffer` to send `*standard-output*` to an Emacs buffer.
+- `M-x slime-toggle-error-buffer` to send `*error-output*` to an Emacs buffer.
+- `M-x slime-toggle-trace-buffer` to send `*trace-output*` to an Emacs buffer.
+
+### Output stream inspector
 
 **EXPERIMENTAL**
 
