@@ -59,7 +59,7 @@
     (slime-flash-region start end)))
 
 (advice-add 'slime-eval-last-expression
-	    :before #'slime-highlight-last-expression)
+            :before #'slime-highlight-last-expression)
 
 ;; -- Display evaluation results in buffer -------------------
 
@@ -83,26 +83,47 @@ This is used by the `inline-message' display functions, as it needs to know the 
   "Maybe show evaluation result in buffer too."
   (when slime-star-display-eval-result-in-buffer
     (if (buffer-live-p slime-current-buffer)
-	(with-current-buffer slime-current-buffer
-	  (inline-message value))
+        (with-current-buffer slime-current-buffer
+          (inline-message value))
       (slime-message "%s" value))))
 
 (advice-add 'slime-eval-with-transcript
-	    :before #'slime-star-save-current-buffer)
+            :before #'slime-star-save-current-buffer)
 
 (advice-add 'slime-display-eval-result
-	    :after #'slime-star-display-eval-result)
+            :after #'slime-star-display-eval-result)
+
+(defun slime-toggle-output-buffer ()
+  "Toggle sending output to a buffer."
+  (interactive)
+  (slime-eval `(slime-star:toggle-send-output-to-buffer)))
+
+(defun slime-toggle-trace-buffer ()
+  "Toggle sending traces to a buffer."
+  (interactive)
+  (slime-eval `(slime-star:toggle-send-trace-to-buffer)))
+
+(defun slime-toggle-error-buffer ()
+  "Toggle sending errors to a buffer."
+  (interactive)
+  (slime-eval `(slime-star:toggle-send-error-to-buffer)))
 
 (defun slime-star--setup-key-bindings ()
   (define-key sldb-mode-map "Q" 'sldb-kill-all-buffers))
 
 (defun slime-star--setup-menus ()
   (easy-menu-add-item 'menubar-slime nil
-		      '("Tools"
-			["System Browser" lisp-system-browser]
-			["Quicklisp Systems" quicklisp-systems]
-			["Quicksearch" quicksearch])
-		      "Documentation"))
+                      '("Tools"
+                        ["System Browser" lisp-system-browser]
+                        ["Quicklisp Systems" quicklisp-systems]
+                        ["Quicksearch" quicksearch])
+                      "Documentation")
+  (easy-menu-add-item 'menubar-slime nil
+                      '("Stream buffers"
+                        ["Toggle output buffer" slime-toggle-output-buffer]
+                        ["Toggle error buffer" slime-toggle-error-buffer]
+                        ["Toggle trace buffer" slime-toggle-trace-buffer])
+                      "Documentation"))
 
 (defvar slime-star--load-path (file-name-directory load-file-name))
 
@@ -113,10 +134,10 @@ This is used by the `inline-message' display functions, as it needs to know the 
 (info-initialize)
 
 (info-lookup-add-help
-    :mode 'lisp-mode
-    :regexp "[^][()'\" \t\n]+"
-    :ignore-case t
-    :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+ :mode 'lisp-mode
+ :regexp "[^][()'\" \t\n]+"
+ :ignore-case t
+ :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
 
 (defun slime-star-ansicl-lookup (symbol-name)
   (info-lookup-symbol (slime-cl-symbol-name symbol-name) 'lisp-mode))
@@ -141,11 +162,11 @@ This is used by the `inline-message' display functions, as it needs to know the 
    (slime-star--setup-menus)
    (sldb-show-frame-local-on-cursor-move)
    (add-hook 'slime-connected-hook
-	     (lambda ()
-	       (when slime-star-use-toolbars
-		 (slime-toolbars-setup-tool-bars))
-	       (when slime-star-use-custom-stepper-highlighter
-		 (slime-stepper--install))))
+             (lambda ()
+               (when slime-star-use-toolbars
+                 (slime-toolbars-setup-tool-bars))
+               (when slime-star-use-custom-stepper-highlighter
+                 (slime-stepper--install))))
    (advice-add 'slime-load-contribs :before #'slime-star--add-swank-path)
    ))
 
