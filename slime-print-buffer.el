@@ -51,5 +51,13 @@
      t)
     (t nil)))
 
+(define-slime-contrib slime-print-buffer
+  "Dedicated buffer for print output.
+Interactive. Features inspection of printed values via SLIME inspector."
+  (:authors "Mariano Montone <marianomontone@gmail.com>")
+  (:license "GPL")
+  (:slime-dependencies slime-buffer-streams)
+  (:swank-dependencies swank-print-buffer))
+
 (provide 'slime-print-buffer)
 ;;; slime-print-buffer.el ends here

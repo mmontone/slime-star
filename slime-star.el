@@ -167,7 +167,7 @@ This is used by the `inline-message' display functions, as it needs to know the 
   "SLIME with extra extensions preinstalled."
   (:authors "Mariano Montone")
   (:license "GPL")
-  (:slime-dependencies quicklisp-systems quicklisp-apropos quicksearch slime-help system-browser-cl slime-breakpoints slime-stream-inspector sldb-source-eval slime-critic slime-trace-buffer slime-buffer-streams)
+  (:slime-dependencies quicklisp-systems quicklisp-apropos quicksearch slime-help system-browser-cl slime-breakpoints slime-stream-inspector sldb-source-eval slime-critic slime-print-buffer slime-trace-buffer slime-buffer-streams)
   (:swank-dependencies slime-star)
   (:on-load
    ;; setup key bindings
