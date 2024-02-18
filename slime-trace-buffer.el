@@ -146,6 +146,14 @@
      t)
     (t nil)))
 
+(define-slime-contrib slime-trace-buffer
+  "Dedicated buffer for trace output.
+Interactive. Features inspection of traces arguments and return values using SLIME inspector."
+  (:authors "Mariano Montone <marianomontone@gmail.com>")
+  (:license "GPL")
+  (:slime-dependencies slime-buffer-streams slime-trace-dialog)
+  (:swank-dependencies swank-trace-buffer))
+
 ;; (setq-local outline-minor-mode-use-buttons t)
 
 ;; (setq-local outline-regexp "\s*[0-100]\:")
