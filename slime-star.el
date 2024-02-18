@@ -41,6 +41,11 @@
   :type 'boolean
   :group 'slime-star)
 
+(defcustom slime-star-show-frame-local-on-cursor-move nil
+  "Show frame local in debugger when cursor moves."
+  :type 'boolean
+  :group 'slime-star)
+
 ;; -- Highlight expression before evaluating it ----------------------------
 
 (defun slime-last-expression-region ()
@@ -169,7 +174,8 @@ This is used by the `inline-message' display functions, as it needs to know the 
    (slime-star--setup-key-bindings)
    ;; add submenu to SLIME menu
    (slime-star--setup-menus)
-   (sldb-show-frame-local-on-cursor-move)
+   (when slime-star-show-frame-local-on-cursor-move
+     (sldb-show-frame-local-on-cursor-move))
    (add-hook 'slime-connected-hook
              (lambda ()
                (when slime-star-use-toolbars
