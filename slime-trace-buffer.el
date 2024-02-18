@@ -146,6 +146,8 @@
      t)
     (t nil)))
 
+(add-hook 'slime-event-hooks 'slime-trace-buffer-event-handler)
+
 (define-slime-contrib slime-trace-buffer
   "Dedicated buffer for trace output.
 Interactive. Features inspection of traces arguments and return values using SLIME inspector."

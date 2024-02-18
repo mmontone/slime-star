@@ -51,6 +51,8 @@
      t)
     (t nil)))
 
+(add-hook 'slime-event-hooks 'slime-print-buffer-event-handler)
+
 (define-slime-contrib slime-print-buffer
   "Dedicated buffer for print output.
 Interactive. Features inspection of printed values via SLIME inspector."

@@ -68,3 +68,5 @@
 (defun inspect-printed (id)
   (swank::inspect-in-emacs (printed-value (find-printed id)))
   "ok")
+
+(provide :swank-print-buffer)

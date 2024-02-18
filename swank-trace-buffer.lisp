@@ -83,3 +83,5 @@
   (let ((trace (swank-trace-dialog::find-trace id)))
     (swank::inspect-in-emacs (swank-trace-dialog::find-trace-part id index type))
     "ok"))
+
+(provide :swank-trace-buffer)

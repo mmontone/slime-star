@@ -163,11 +163,19 @@ This is used by the `inline-message' display functions, as it needs to know the 
 (defun slime-star--add-swank-path ()
   (slime-eval `(cl:progn (cl:push ,slime-star--load-path swank::*load-path*) nil)))
 
+;; This is a hack. Sort SWANK requirements for proper loading (they are dependent on each other.)
+(defun slime-star--sort-requirements ()
+  (setq slime-required-modules
+        (list* 'swank-buffer-streams
+               'swank-trace-dialog
+               (cl-remove-if (lambda (x) (member x '(swank-buffer-streams swank-trace-dialog)))
+                             slime-required-modules))))
+
 (define-slime-contrib slime-star
   "SLIME with extra extensions preinstalled."
   (:authors "Mariano Montone")
   (:license "GPL")
-  (:slime-dependencies quicklisp-systems quicklisp-apropos quicksearch slime-help system-browser-cl slime-breakpoints slime-stream-inspector sldb-source-eval slime-critic slime-print-buffer slime-trace-buffer slime-buffer-streams)
+  (:slime-dependencies slime-buffer-streams slime-print-buffer slime-trace-buffer quicklisp-systems quicklisp-apropos quicksearch slime-help system-browser-cl slime-breakpoints slime-stream-inspector sldb-source-eval slime-critic slime-buffer-streams)
   (:swank-dependencies slime-star)
   (:on-load
    ;; setup key bindings
@@ -182,6 +190,7 @@ This is used by the `inline-message' display functions, as it needs to know the 
                  (slime-toolbars-setup-tool-bars))
                (when slime-star-use-custom-stepper-highlighter
                  (slime-stepper--install))))
+   (advice-add 'slime-load-contribs :before #'slime-star--sort-requirements)
    (advice-add 'slime-load-contribs :before #'slime-star--add-swank-path)
    ))
 
