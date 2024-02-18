@@ -12,10 +12,10 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 - [SLIME Breakpoints](https://github.com/mmontone/slime-breakpoints)
 - [Quicklisp apropos](https://github.com/mmontone/quicklisp-apropos)
 - [SLIME Critic](https://github.com/mmontone/slime-critic)
-- Use dedicated Emacs buffers for output streams.
-- Interactive trace and print buffers.
-- Inspect objects from their printed representation in output streams.
-- Access to dpans3 based ANSICL spec in Emacs Info format.
+- Use [dedicated Emacs buffers](#dedicated-emacs-buffers-for-output-streams) for output streams.
+- Interactive [trace and print buffers](#interactive-trace-and-print-buffers).
+- Inspect objects from their printed representation in [output streams](#output-stream-inspector).
+- [Access to dpans3 based ANSICL spec](#improved-documentation-mode) in Emacs Info format.
 
 It also adds some custom utilities and menus.
 
