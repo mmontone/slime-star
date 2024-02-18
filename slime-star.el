@@ -96,17 +96,26 @@ This is used by the `inline-message' display functions, as it needs to know the 
 (defun slime-toggle-output-buffer ()
   "Toggle sending output to a buffer."
   (interactive)
-  (slime-eval `(slime-star:toggle-send-output-to-buffer)))
+  (let ((enabled? (slime-eval `(slime-star:toggle-send-output-to-buffer))))
+    (message (if enabled?
+                 "Output buffer enabled"
+               "Output buffer disabled"))))
 
 (defun slime-toggle-trace-buffer ()
   "Toggle sending traces to a buffer."
   (interactive)
-  (slime-eval `(slime-star:toggle-send-trace-to-buffer)))
+  (let ((enabled? (slime-eval `(slime-star:toggle-send-trace-to-buffer))))
+    (message (if enabled?
+                 "Trace buffer enabled"
+               "Trace buffer disabled"))))
 
 (defun slime-toggle-error-buffer ()
   "Toggle sending errors to a buffer."
   (interactive)
-  (slime-eval `(slime-star:toggle-send-error-to-buffer)))
+  (let ((enabled? (slime-eval `(slime-star:toggle-send-error-to-buffer))))
+    (message (if enabled?
+                 "Error buffer enabled"
+               "Error buffer disabled"))))
 
 (defun slime-star--setup-key-bindings ()
   (define-key sldb-mode-map "Q" 'sldb-kill-all-buffers))
