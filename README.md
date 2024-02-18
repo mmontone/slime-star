@@ -13,6 +13,7 @@ This is a [SLIME](https://slime.common-lisp.dev/) configuration that provides th
 - [Quicklisp apropos](https://github.com/mmontone/quicklisp-apropos)
 - [SLIME Critic](https://github.com/mmontone/slime-critic)
 - Use dedicated Emacs buffers for output streams.
+- Interactive trace and print buffers.
 - Inspect objects from their printed representation in output streams.
 - Access to dpans3 based ANSICL spec in Emacs Info format.
 
@@ -79,6 +80,18 @@ Use:
 - `M-x slime-toggle-output-buffer` to send `*standard-output*` to an Emacs buffer.
 - `M-x slime-toggle-error-buffer` to send `*error-output*` to an Emacs buffer.
 - `M-x slime-toggle-trace-buffer` to send `*trace-output*` to an Emacs buffer.
+
+### Interactive TRACE and PRINT buffers
+
+#### Trace buffer
+
+Toggle functions for tracing using `C-c M-t`. After traced functions are called an interactive Emacs buffer appears, from where it is possible to inspect the traces, interactively.
+
+![trace-and-print-buffers](screenshots/trace-and-print-buffers.png)
+
+#### Print buffer
+
+For debugging, insert a call to `swank-print-buffer:prn` in what you want to get printed for inspection. An Emacs buffer opens from where it is possible to inspect the printed value. 
 
 ### Output stream inspector
 
