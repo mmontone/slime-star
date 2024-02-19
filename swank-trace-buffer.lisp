@@ -12,19 +12,21 @@
 
 ;; Code that uses a plain slime stream
 
-(defvar *trace-stream* (swank-buffer-streams:make-buffer-output-stream :trace))
+;; (defvar *trace-stream* (swank-buffer-streams:make-buffer-output-stream :trace))
 
-(defun write-trace-to-stream (trace-entry)
-  (princ (swank-trace-dialog::parent-of trace-entry) *trace-stream*)
-  (format *trace-stream* "(~a ~s)"
-          (swank-trace-dialog::spec-of trace-entry)
-          (swank-trace-dialog::args-of trace-entry))
-  (terpri *trace-stream*)
-  (format *trace-stream* "=> ~s" (swank-trace-dialog::retlist-of trace-entry))
-  (terpri *trace-stream*)
-  (finish-output *trace-stream*))
+;; (defun write-trace-to-stream (trace-entry)
+;;   (princ (swank-trace-dialog::parent-of trace-entry) *trace-stream*)
+;;   (format *trace-stream* "(~a ~s)"
+;;           (swank-trace-dialog::spec-of trace-entry)
+;;           (swank-trace-dialog::args-of trace-entry))
+;;   (terpri *trace-stream*)
+;;   (format *trace-stream* "=> ~s" (swank-trace-dialog::retlist-of trace-entry))
+;;   (terpri *trace-stream*)
+;;   (finish-output *trace-stream*))
 
-(pushnew 'write-trace-to-stream swank-trace-dialog::*after-trace-hooks*)
+;; (pushnew 'write-trace-to-stream swank-trace-dialog::*after-trace-hooks*)
+
+;; Code that sends special trace events to Emacs
 
 (defun trace-level (trace)
   (let ((parent (swank-trace-dialog::parent-of trace)))
@@ -42,8 +44,6 @@
         :args (mapcar #'write-object (swank-trace-dialog::args-of trace))
         :retlist (mapcar #'write-object (swank::ensure-list (swank-trace-dialog::retlist-of trace)))
         :level (trace-level trace)))
-
-;; Code that sends special trace events to Emacs
 
 (defun send-trace-enter-event (trace)
   (swank::with-connection (swank::*emacs-connection*)

@@ -27,14 +27,14 @@
 
 ;; Code that uses a plain slime stream
 
-(defvar *print-stream* (swank-buffer-streams:make-buffer-output-stream :print))
+;; (defvar *print-stream* (swank-buffer-streams:make-buffer-output-stream :print))
 
-(defun print-to-stream (expr value)
-  (princ expr *print-stream*)
-  (write-string " => " *print-stream*)
-  (princ value *print-stream*)
-  (terpri *print-stream*)
-  (finish-output *print-stream*))
+;; (defun print-to-stream (expr value)
+;;   (princ expr *print-stream*)
+;;   (write-string " => " *print-stream*)
+;;   (princ value *print-stream*)
+;;   (terpri *print-stream*)
+;;   (finish-output *print-stream*))
 
 ;; Code that sends special print events to Emacs
 
