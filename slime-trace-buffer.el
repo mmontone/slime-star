@@ -24,9 +24,6 @@
 
 ;;; Code:
 
-(provide 'slime-trace-buffer)
-;;; slime-trace-buffer.el ends here
-
 (require 'slime)
 (require 'cl-lib)
 
@@ -176,3 +173,6 @@ Interactive. Features inspection of traces arguments and return values using SLI
 ;;     (outline-hide-leaves)))
 
 ;; (setq-local header-line-format "[RET] open [i] inspect")
+
+(provide 'slime-trace-buffer)
+;;; slime-trace-buffer.el ends here
