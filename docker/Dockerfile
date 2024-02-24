@@ -19,4 +19,7 @@ RUN sbcl --eval '(ql:quickload (list :asdf :alexandria :anaphora :drakma :dexado
 RUN mkdir ~/.emacs.d
 RUN cd ~/.emacs.d && git clone --recursive https://github.com/mmontone/slime-star.git
 
+ADD install.el /root/.emacs.d/
+RUN emacs -batch -l /root/.emacs.d/install.el
+
 ADD init.el /root/.emacs.d/

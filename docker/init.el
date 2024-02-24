@@ -5,10 +5,6 @@
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize))
 
-(package-refresh-contents)
-
-(package-install 'slime)
-
 ;; Setup load-path, autoloads and your lisp system
 (add-to-list 'load-path "~/.emacs.d/slime-star")
 
@@ -17,3 +13,6 @@
 (setq inferior-lisp-program "sbcl")
 
 (slime)
+
+(find-file "~/.emacs.d/slime-star/README.org")
+(display-buffer "README.org")
