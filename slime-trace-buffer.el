@@ -29,19 +29,18 @@
 
 (require 'slime)
 (require 'cl-lib)
-(require 'anaphora)
 
 (defun slime-trace-buffer-add-hooks ()
   (add-hook 'slime-event-hooks 'slime-trace-buffer-event-handler))
 
 (defun slime-trace-buffer--get-buffer ()
   "Get buffer for traces."
-  (aif (get-buffer "*slime-trace*")
-      it
-    (let ((buffer (generate-new-buffer "*slime-trace*")))
-      (with-current-buffer buffer
-        ;; Initialize here
-        buffer))))
+  (let ((buf (get-buffer "*slime-trace*")))
+    (if buf buf
+      (let ((buffer (generate-new-buffer "*slime-trace*")))
+        (with-current-buffer buffer
+          ;; Initialize here
+          buffer)))))
 
 (defgroup slime-trace-buffer nil
   "SLIME Trace Buffer settings."
@@ -126,25 +125,25 @@
 
 (defun slime-trace-buffer-event-handler (event)
   (slime-dcase event
-    ((:stb/trace-enter trace)
-     (let ((buffer (slime-trace-buffer--get-buffer)))
-       (with-current-buffer buffer
-         (slime-trace-buffer--insert-trace-enter trace)
-         (newline)
-         (unless (get-buffer-window)
-           (display-buffer buffer))))
-     t)
-    ((:stb/trace-exit trace)
-     (let ((buffer (slime-trace-buffer--get-buffer)))
-       (with-current-buffer buffer
-         (slime-trace-buffer--insert-trace-exit trace)
-         (newline)
-         (unless (get-buffer-window)
-           (display-buffer buffer))
-         (unless (eq buffer (window-buffer (selected-window))) ;; buffer has focus
-           (set-window-point (get-buffer-window buffer) (point-max)))))
-     t)
-    (t nil)))
+               ((:stb/trace-enter trace)
+                (let ((buffer (slime-trace-buffer--get-buffer)))
+                  (with-current-buffer buffer
+                    (slime-trace-buffer--insert-trace-enter trace)
+                    (newline)
+                    (unless (get-buffer-window)
+                      (display-buffer buffer))))
+                t)
+               ((:stb/trace-exit trace)
+                (let ((buffer (slime-trace-buffer--get-buffer)))
+                  (with-current-buffer buffer
+                    (slime-trace-buffer--insert-trace-exit trace)
+                    (newline)
+                    (unless (get-buffer-window)
+                      (display-buffer buffer))
+                    (unless (eq buffer (window-buffer (selected-window))) ;; buffer has focus
+                      (set-window-point (get-buffer-window buffer) (point-max)))))
+                t)
+               (t nil)))
 
 (add-hook 'slime-event-hooks 'slime-trace-buffer-event-handler)
 
