@@ -11,18 +11,15 @@
 This is a [[https://slime.common-lisp.dev/][SLIME]] configuration that
 provides the following contribs:
 
-- [[https://github.com/mmontone/lisp-system-browser][Lisp System
-  Browser]]
+- [[https://github.com/mmontone/lisp-system-browser][Lisp System Browser]]
 - [[https://github.com/mmontone/slime-doc-contribs][SLIME Doc Contribs]]
 - [[https://github.com/mmontone/quicklisp-systems][Quicklisp Systems]]
 - [[https://github.com/tkych/quicksearch][Quicksearch utility]]
 - [[https://github.com/mmontone/slime-breakpoints][SLIME Breakpoints]]
 - [[https://github.com/mmontone/quicklisp-apropos][Quicklisp apropos]]
 - [[https://github.com/mmontone/slime-critic][SLIME Critic]]
-- Use [[#dedicated-emacs-buffers-for-output-streams][dedicated Emacs
-  buffers]] for output streams.
-- Interactive [[#interactive-trace-and-print-buffers][trace and print
-  buffers]].
+- Use [[#dedicated-emacs-buffers-for-output-streams][dedicated Emacs buffers]] for output streams.
+- Interactive [[#interactive-trace-and-print-buffers][trace and print buffers]].
 - Inspect objects from their printed representation in
   [[#output-stream-inspector][output streams]].
 - [[#improved-documentation-mode][Access to dpans3 based ANSICL spec]]
@@ -126,6 +123,8 @@ then restart Emacs (not all changes are immediatly applied).
 #+CAPTION: slime-critic
 [[https://github.com/mmontone/slime-critic/raw/master/screenshot.png]]
 
+- =M-x slime-critic-critique-buffer= 
+
 *** Quicklisp system browsing
     :PROPERTIES:
     :CUSTOM_ID: quicklisp-system-browsing
@@ -133,6 +132,9 @@ then restart Emacs (not all changes are immediatly applied).
 
 #+CAPTION: quicklisp-systems
 [[https://github.com/mmontone/quicklisp-systems/raw/master/screenshot.png]]
+
+- =M-x lisp-system-browser= to start.
+- =M-x quit-system-browser= to quit.
 
 *** Dedicated Emacs buffers for output streams
     :PROPERTIES:
