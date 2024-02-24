@@ -1,0 +1,200 @@
+* SLIME ⭐
+  :PROPERTIES:
+  :CUSTOM_ID: slime
+  :END:
+
+** Overview
+   :PROPERTIES:
+   :CUSTOM_ID: overview
+   :END:
+
+This is a [[https://slime.common-lisp.dev/][SLIME]] configuration that
+provides the following contribs:
+
+- [[https://github.com/mmontone/lisp-system-browser][Lisp System
+  Browser]]
+- [[https://github.com/mmontone/slime-doc-contribs][SLIME Doc Contribs]]
+- [[https://github.com/mmontone/quicklisp-systems][Quicklisp Systems]]
+- [[https://github.com/tkych/quicksearch][Quicksearch utility]]
+- [[https://github.com/mmontone/slime-breakpoints][SLIME Breakpoints]]
+- [[https://github.com/mmontone/quicklisp-apropos][Quicklisp apropos]]
+- [[https://github.com/mmontone/slime-critic][SLIME Critic]]
+- Use [[#dedicated-emacs-buffers-for-output-streams][dedicated Emacs
+  buffers]] for output streams.
+- Interactive [[#interactive-trace-and-print-buffers][trace and print
+  buffers]].
+- Inspect objects from their printed representation in
+  [[#output-stream-inspector][output streams]].
+- [[#improved-documentation-mode][Access to dpans3 based ANSICL spec]]
+  in Emacs Info format.
+
+It also adds some custom utilities and menus.
+
+** Install
+   :PROPERTIES:
+   :CUSTOM_ID: install
+   :END:
+
+⚠️ *This is ALPHA software*
+
+Clone this repository using --recursive option (this repo has git
+submodules):
+
+#+BEGIN_EXAMPLE
+    git clone --recursive https://github.com/mmontone/slime-star.git
+#+END_EXAMPLE
+
+Install some dependencies from Quicklisp:
+
+#+BEGIN_SRC lisp
+    (ql:quickload '(:asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite :montezuma :chipz :archive :string-case :lisp-critic))
+#+END_SRC
+
+In your =.emacs=:
+
+#+BEGIN_EXAMPLE
+    ;; Setup load-path, autoloads and your lisp system
+    (add-to-list 'load-path "~/dir/to/cloned/slime-star")
+
+    ;; Add slime-star to slime-contribs:
+    (setq slime-contribs '(slime-fancy slime-star))
+#+END_EXAMPLE
+
+*** Try via Docker
+    :PROPERTIES:
+    :CUSTOM_ID: try-via-docker
+    :END:
+
+From =docker= directory run:
+
+- =make build=
+- =make run=
+
+** Configuration
+   :PROPERTIES:
+   :CUSTOM_ID: configuration
+   :END:
+
+You'll need to =M-x customize-group slime-star= and
+=M-x customize-group slime-breakpoints= to enable some of the features
+(experimental and opinionated features are disabled by default). And
+then restart Emacs (not all changes are immediatly applied).
+
+** Screenshots
+   :PROPERTIES:
+   :CUSTOM_ID: screenshots
+   :END:
+
+*** System browser
+    :PROPERTIES:
+    :CUSTOM_ID: system-browser
+    :END:
+
+#+CAPTION: system-browser
+[[https://github.com/mmontone/lisp-system-browser/raw/master/lisp-system-browser.png]]
+
+*** Quickload with completion
+    :PROPERTIES:
+    :CUSTOM_ID: quickload-with-completion
+    :END:
+
+#+CAPTION: quickload completion
+[[https://github.com/mmontone/quicklisp-systems/raw/master/completion.gif]]
+
+*** Breakpoints, stepping, toolbars, evaluation and locals navigation
+    :PROPERTIES:
+    :CUSTOM_ID: breakpoints-stepping-toolbars-evaluation-and-locals-navigation
+    :END:
+
+[[file:screenshots/toolbars.png]]
+[[https://github.com/mmontone/slime-breakpoints/raw/master/sldb-source-eval.png]]
+[[https://github.com/mmontone/slime-breakpoints/blob/master/sldb-show-frame-local.gif]]
+
+*** Improved documentation mode
+    :PROPERTIES:
+    :CUSTOM_ID: improved-documentation-mode
+    :END:
+
+[[https://github.com/mmontone/slime-doc-contribs/raw/master/slime-help.png]]
+[[file:screenshots/ansicl-info.png]]
+
+*** Critic
+    :PROPERTIES:
+    :CUSTOM_ID: critic
+    :END:
+
+#+CAPTION: slime-critic
+[[https://github.com/mmontone/slime-critic/raw/master/screenshot.png]]
+
+*** Quicklisp system browsing
+    :PROPERTIES:
+    :CUSTOM_ID: quicklisp-system-browsing
+    :END:
+
+#+CAPTION: quicklisp-systems
+[[https://github.com/mmontone/quicklisp-systems/raw/master/screenshot.png]]
+
+*** Dedicated Emacs buffers for output streams
+    :PROPERTIES:
+    :CUSTOM_ID: dedicated-emacs-buffers-for-output-streams
+    :END:
+
+Use:
+
+- =M-x slime-toggle-output-buffer= to send =*standard-output*= to an
+  Emacs buffer.
+- =M-x slime-toggle-error-buffer= to send =*error-output*= to an Emacs
+  buffer.
+- =M-x slime-toggle-trace-buffer= to send =*trace-output*= to an Emacs
+  buffer.
+
+*** Interactive TRACE and PRINT buffers
+    :PROPERTIES:
+    :CUSTOM_ID: interactive-trace-and-print-buffers
+    :END:
+
+**** Trace buffer
+     :PROPERTIES:
+     :CUSTOM_ID: trace-buffer
+     :END:
+
+Toggle functions for tracing using =C-c M-t=. After traced functions are
+called an interactive Emacs buffer appears, from where it is possible to
+inspect the traces, interactively.
+
+#+CAPTION: trace-and-print-buffers
+[[file:screenshots/trace-and-print-buffers.png]]
+
+**** Print buffer
+     :PROPERTIES:
+     :CUSTOM_ID: print-buffer
+     :END:
+
+For debugging, insert a call to =swank-print-buffer:prn= in what you
+want to get printed for inspection. An Emacs buffer opens from where it
+is possible to inspect the printed value.
+
+*** Output stream inspector
+    :PROPERTIES:
+    :CUSTOM_ID: output-stream-inspector
+    :END:
+
+*EXPERIMENTAL*
+
+SLIME does not provide a way of inspecting objects printed to output
+streams; say an object is printed to some stream:
+=#<PERSON {100587C0C3}>=, there's no way to access and inspect the
+object printed.
+
+SLIME ⭐ comes with an extension for inspecting objects that are printed
+to output streams. To enable, evaluate in Lisp:
+=(setf stream-inspector:*persistent-pointers* t)=. Then from emacs, move
+the cursor to some printed object, and =M-x slime-inspect-printed=.
+
+** License
+   :PROPERTIES:
+   :CUSTOM_ID: license
+   :END:
+
+SLIME :star: is free software. All files, unless explicitly stated
+otherwise, are public domain.
