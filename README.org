@@ -90,6 +90,9 @@ then restart Emacs (not all changes are immediatly applied).
 #+CAPTION: system-browser
 [[https://github.com/mmontone/lisp-system-browser/raw/master/lisp-system-browser.png]]
 
+- =M-x lisp-system-browser= to start.
+- =M-x quit-system-browser= to quit.
+
 *** Quickload with completion
     :PROPERTIES:
     :CUSTOM_ID: quickload-with-completion
@@ -133,8 +136,7 @@ then restart Emacs (not all changes are immediatly applied).
 #+CAPTION: quicklisp-systems
 [[https://github.com/mmontone/quicklisp-systems/raw/master/screenshot.png]]
 
-- =M-x lisp-system-browser= to start.
-- =M-x quit-system-browser= to quit.
+=M-x quicklisp-systems= command and family.
 
 *** Dedicated Emacs buffers for output streams
     :PROPERTIES:
