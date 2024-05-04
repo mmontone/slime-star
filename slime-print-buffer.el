@@ -24,8 +24,43 @@
 
 ;;; Code:
 
-(require 'slime)
 (require 'cl-lib)
+(require 'slime)
+(require 'slime-breakpoints)
+
+(defun slime-debug-print-next-expression-in-buffer ()
+  "Instrument next expression to be debug printed in an Emacs buffer when evaluated.
+The function at point is compiled with the extra debugging code.
+Use `slime-compile-defun' on the function source code to recompile without the debugging stuff.
+Requires cl-debug-print."
+  (interactive)
+  (let* (expr
+         (source-with-print
+          (slime--wrap-next-expression
+           (lambda (exp)
+             (setq expr exp)
+             (format "(swank-print-buffer:prn %s)" exp)))))
+    (slime--async-compile-string
+     source-with-print 0
+     (lambda (_result)
+       (display-message-or-buffer (format "Instrumented for debug printing: %s" expr))))))
+
+(defun slime-debug-print-last-expression-in-buffer ()
+  "Instrument last expression to be debug printed in an Emacs buffer when evaluated.
+The function at point is compiled with the extra debugging code.
+Use `slime-compile-defun' on the function source code to recompile without the debugging stuff.
+Requires cl-debug-print."
+  (interactive)
+  (let* (expr
+         (source-with-print
+          (slime--wrap-last-expression
+           (lambda (exp)
+             (setq expr exp)
+             (format "(swank-print-buffer:prn %s)" exp)))))
+    (slime--async-compile-string
+     source-with-print 0
+     (lambda (_result)
+       (display-message-or-buffer (format "Instrumented for debug printing: %s" expr))))))
 
 (defun slime-print-buffer-add-hooks ()
   (add-hook 'slime-event-hooks 'slime-print-buffer-event-handler))

@@ -174,7 +174,9 @@ inspect the traces, interactively.
      :CUSTOM_ID: print-buffer
      :END:
 
-For debugging, insert a call to =swank-print-buffer:prn= in what you
+Use commands =M-x slime-debug-print-last-expression-in-buffer= and
+=M-x slime-debug-print-next-expression-in-buffer= for printing expression to
+an Emacs buffer. Or manually insert a call to =swank-print-buffer:prn= in what you
 want to get printed for inspection. An Emacs buffer opens from where it
 is possible to inspect the printed value.
 
