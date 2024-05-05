@@ -1,4 +1,4 @@
-FROM silex/emacs:27.2
+FROM silex/emacs:29
 
 RUN apt-get update && apt-get install -y make bzip2 wget git
 RUN wget 'http://prdownloads.sourceforge.net/sbcl/sbcl-2.2.2-x86-64-linux-binary.tar.bz2' -O /tmp/sbcl.tar.bz2 && \
@@ -14,7 +14,7 @@ RUN cd /tmp && \
     sbcl --load quicklisp.lisp --quit --eval '(quicklisp-quickstart:install)'
 COPY sbclrc /root/.sbclrc
 
-RUN sbcl --eval '(ql:quickload (list :asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite :montezuma :chipz :archive :string-case :lisp-critic))' --quit
+RUN sbcl --eval '(ql:quickload (list :asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite :montezuma :chipz :archive :string-case :lisp-critic :cl-debug-print))' --quit
 
 RUN mkdir ~/.emacs.d
 RUN cd ~/.emacs.d && git clone --recursive https://github.com/mmontone/slime-star.git
