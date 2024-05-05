@@ -6,3 +6,6 @@ rebuild:
 
 run:
 	docker run -it slime-star
+
+debug:
+	docker run --entrypoint /bin/bash -it slime-star

@@ -4,5 +4,5 @@
   (package-initialize))
 
 (package-refresh-contents)
-
+(package-install 'compat)
 (package-install 'slime)

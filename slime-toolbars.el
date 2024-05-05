@@ -4,6 +4,7 @@
 ;;
 
 (require 'slime)
+(require 'image)
 
 ;;; Code:
 
