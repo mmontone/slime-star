@@ -69,7 +69,7 @@ Requires asdf-dependency-graph library installed."
   (interactive (list (slime-read-system-name "Generate graph for system")))
   (let ((output-file (make-temp-file "asdf-dependency-graph-" nil ".png")))
     (slime-eval `(cl:progn (cl:require :asdf-dependency-graph)
-                           (asdf-dependency-graph:generate ,output-file ',system)))
+                           (uiop:symbol-call 'asdf-dependency-graph 'generate ,output-file ',system)))
     (find-file output-file)))
 
 (provide 'slime-star-commands)
