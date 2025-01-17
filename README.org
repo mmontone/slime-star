@@ -180,11 +180,6 @@ an Emacs buffer. Or manually insert a call to =swank-print-buffer:prn= in what y
 want to get printed for inspection. An Emacs buffer opens from where it
 is possible to inspect the printed value.
 
-*** Output stream inspector
-    :PROPERTIES:
-    :CUSTOM_ID: output-stream-inspector
-    :END:
-
 ** Extra commands
 
 - =M-x slime-system-dependency-graph= Visualize a dependencies graph for ASDF SYSTEM. Requires asdf-dependency-graph library installed.
@@ -194,6 +189,11 @@ is possible to inspect the printed value.
 - =M-x slime-room= Show Common Lisp ROOM information in an Emacs buffer.
   
 ** *EXPERIMENTAL*
+
+*** Output stream inspector
+    :PROPERTIES:
+    :CUSTOM_ID: output-stream-inspector
+    :END:
 
 SLIME does not provide a way of inspecting objects printed to output
 streams; say an object is printed to some stream:
