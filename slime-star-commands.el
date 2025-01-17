@@ -16,6 +16,9 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+
+;; Extra commands for SLIME
+
 ;;; Code:
 
 (require 'slime)
@@ -24,12 +27,12 @@
   "Show Common Lisp ROOM information in an Emacs buffer."
   (interactive)
   (let ((room-str
-	 (slime-eval `(cl:with-output-to-string (cl:*standard-output*)
-						(cl:room)))))
+         (slime-eval `(cl:with-output-to-string (cl:*standard-output*)
+                                                (cl:room)))))
     (let ((buffer (get-buffer-create "*slime-room*")))
       (with-current-buffer buffer
-	(insert room-str)
-	(display-buffer buffer)))))
+        (insert room-str)
+        (display-buffer buffer)))))
 
 (defun slime-scratch ()
   "Open the equivalent of an Emacs *scratch* buffer, for Common Lisp/SLIME."
@@ -46,7 +49,7 @@
     (kill-buffer buf)))
 
 (defun sldb-show-all-frames-details ()
-  "Show details of all frames."
+  "Show details of all frames in debugger."
   (interactive)
   (let ((inhibit-read-only t)
         (inhibit-point-motion-hooks t))
@@ -57,8 +60,17 @@
 
     (dotimes (i 5)
       (when (get-text-property (point) 'frame)
-	(sldb-show-frame-details)
-	(sldb-forward-frame)))))
+        (sldb-show-frame-details)
+        (sldb-forward-frame)))))
+
+(defun slime-system-dependency-graph (system)
+  "Visualize a dependencies graph for ASDF SYSTEM.
+Requires asdf-dependency-graph library installed."
+  (interactive (list (slime-read-system-name "Generate graph for system")))
+  (let ((output-file (make-temp-file "asdf-dependency-graph-" nil ".png")))
+    (slime-eval `(cl:progn (cl:require :asdf-dependency-graph)
+                           (asdf-dependency-graph:generate ,output-file ',system)))
+    (find-file output-file)))
 
 (provide 'slime-star-commands)
 

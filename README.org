@@ -185,7 +185,15 @@ is possible to inspect the printed value.
     :CUSTOM_ID: output-stream-inspector
     :END:
 
-*EXPERIMENTAL*
+** Extra commands
+
+- =M-x slime-system-dependency-graph= Visualize a dependencies graph for ASDF SYSTEM. Requires asdf-dependency-graph library installed.
+- =M-x sldb-show-all-frames-details= Show details of all frames in debugger.
+- =M-x sldb-kill-all-buffers= Kill all SLDB (debugger) buffers.
+- =M-x slime-scratch= Open the equivalent of an Emacs *scratch* buffer, for Common Lisp/SLIME.
+- =M-x slime-room= Show Common Lisp ROOM information in an Emacs buffer.
+  
+** *EXPERIMENTAL*
 
 SLIME does not provide a way of inspecting objects printed to output
 streams; say an object is printed to some stream:
