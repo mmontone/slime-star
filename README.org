@@ -44,7 +44,7 @@ submodules):
 Install some dependencies from Quicklisp:
 
 #+BEGIN_SRC lisp
-    (ql:quickload '(:asdf :alexandria :anaphora :drakma :dexador :fiveam :closer-mop :iterate :do-urlencode :yason :html-entities :slite :montezuma :chipz :archive :string-case :lisp-critic :cl-debug-print))
+    sbcl --load install.lisp --quit
 #+END_SRC
 
 In your =.emacs=:
