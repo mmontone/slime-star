@@ -37,7 +37,9 @@
     (slime-compile-file :help "Compile Lisp file"
                         :icon "compile-file")
     (slime-load-system :help "Load ASDF system"
-                       :icon "load-system"))
+                       :icon "load-system")
+    (slime-restart-inferior-lisp :help "Restart inferior Lisp"
+                                 :icon "refresh"))
   "SLIME toolbar spec."
   :type '(set symbol)
   :group 'slime-star)
