@@ -31,7 +31,7 @@
   "Evaluate SLIME action."
   (interactive)
   (let ((actions (slime-eval'(slime-actions:actions-for-emacs))))
-    (let ((action (completing-read "Run: " actions)))
+    (let ((action (completing-read "Run: " (mapcar #'downcase actions))))
       (let ((result-message (slime-eval `(slime-actions:run-action ',action))))
         (message result-message)))))
 
