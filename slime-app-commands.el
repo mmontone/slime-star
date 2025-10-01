@@ -1,4 +1,4 @@
-;;; slime-application-commands.el --- Makes application specific commands available from Emacs          -*- lexical-binding: t; -*-
+;;; slime-app-commands.el --- Define application specific commands Lisp side, then run them from Emacs.          -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025  Mariano Montone
 
@@ -21,31 +21,32 @@
 
 ;;; Commentary:
 
-;; Define Lisp actions and make them appear as Emacs commands.
+;; Define application specific commands Lisp side, then run them from Emacs.
 
 ;; Bind menu key:
-;; (slime-actions-bind-menu-key)
+;; (slime-app-commands-bind-menu-key)
 
 ;;; Code:
 
 (require 'slime)
 
-(defun slime-run-action ()
-  "Evaluate SLIME action."
+(defun slime-app-commands-run ()
+  "Evaluate SLIME command."
   (interactive)
-  (let ((actions (slime-eval'(slime-actions:actions-for-emacs))))
-    (let ((action (completing-read "Run: " (mapcar #'downcase actions))))
-      (let ((result-message (slime-eval `(slime-actions:run-action ',action))))
+  (let ((commands (slime-eval'(slime-app-commands:commands-for-emacs))))
+    (let ((command (completing-read "Run: " (mapcar #'downcase commands))))
+      (let ((result-message (slime-eval `(slime-app-commands:run-command ',command))))
         (message result-message)))))
 
-(defun slime-actions-bind-menu-key (&optional key)
+(defun slime-app-commands-bind-menu-key (&optional key)
+  "Bind menu KEY to `slime-app-commands-run'."
   (let ((key (or key "<menu>")))
     (add-hook 'lisp-mode-hook
               (lambda ()
-                (local-set-key (kbd key) 'slime-run-action)))
+                (local-set-key (kbd key) 'slime-app-commands-run)))
     (add-hook 'slime-repl-mode-hook
               (lambda ()
-                (local-set-key (kbd key) 'slime-run-action)))))
+                (local-set-key (kbd key) 'slime-app-commands-run)))))
 
-(provide 'slime-actions)
-;;; slime-actions.el ends here
+(provide 'slime-app-commands)
+;;; slime-app-commands.el ends here
