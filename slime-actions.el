@@ -23,6 +23,9 @@
 
 ;; Define Lisp actions and make them appear as Emacs commands.
 
+;; Bind menu key:
+;; (slime-actions-bind-menu-key)
+
 ;;; Code:
 
 (require 'slime)
@@ -34,6 +37,15 @@
     (let ((action (completing-read "Run: " (mapcar #'downcase actions))))
       (let ((result-message (slime-eval `(slime-actions:run-action ',action))))
         (message result-message)))))
+
+(defun slime-actions-bind-menu-key (&optional key)
+  (let ((key (or key "<menu>")))
+    (add-hook 'lisp-mode-hook
+              (lambda ()
+                (local-set-key (kbd key) 'slime-run-action)))
+    (add-hook 'slime-repl-mode-hook
+              (lambda ()
+                (local-set-key (kbd key) 'slime-run-action)))))
 
 (provide 'slime-actions)
 ;;; slime-actions.el ends here
