@@ -102,8 +102,8 @@ This function also removes itself from `post-command-hook'."
   (add-hook 'post-command-hook #'inline-message--remove-overlay nil 'local))
 
 (cl-defun inline-message (message &rest props &key where
-				  (duration 'command)
-				  (type 'inline-message)
+                                  (duration 'command)
+                                  (type 'inline-message)
                                   (prepend-face 'inline-message-overlay-face) &allow-other-keys)
   "Place an overlay displaying MESSAGE at the position determined by WHERE.
 MESSAGE is used as the overlay's after-string property, meaning it is
@@ -138,7 +138,8 @@ overlay."
         (when (number-or-marker-p where)
           (goto-char where))
         ;; Make sure the overlay is actually at the end.
-        (skip-chars-backward "\r\n[:blank:]")
+        (when (looking-at "\r\n[:blank:]")
+          (skip-chars-backward "\r\n[:blank:]"))
         (let* ((beg (if (consp where)
                         (car where)
                       (save-excursion
